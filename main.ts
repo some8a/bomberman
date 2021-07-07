@@ -1,5 +1,8 @@
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     for (let index = 0; index < 2; index++) {
+        if (mySprite.overlapsWith(renga)) {
+            break;
+        }
         mySprite.setImage(img`
             . . . . . . . . . . . . . 
             . . . f f f f f f . . . . 
@@ -46,6 +49,9 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     for (let index = 0; index < 2; index++) {
+        if (mySprite.overlapsWith(renga)) {
+            break;
+        }
         mySprite.setImage(img`
             . . . . . . . . . . . . . 
             . . . . . f f f f . . . . 
@@ -92,6 +98,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     for (let index = 0; index < 2; index++) {
+        if (mySprite.overlapsWith(renga)) {
+            break;
+        }
         mySprite.setImage(img`
             . . . . . . . . . . . . . 
             . . . . f f f f f f . . . 
@@ -138,6 +147,9 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     for (let index = 0; index < 2; index++) {
+        if (mySprite.overlapsWith(renga)) {
+            break;
+        }
         mySprite.setImage(img`
             . . . . . . . . . . . . . 
             . . . . . f f f f . . . . 
@@ -184,22 +196,22 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite2 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . f f f f f f . . . 
-        . . . . . f f . . . . . f . . . 
-        . . . . f f . . . . . . . f f . 
-        . . . f . . . . . . . . . . f . 
-        . . . f . . . . . . . . . . f . 
-        . . . f . . . . . . . . . . f . 
-        . . . f . . . . . . . . . . f . 
-        . . . f f . . . . . . . . f f . 
-        . . . . f . . . . . . . . f . . 
-        . . . . f f . . . . . . f f . . 
-        . . . . . f f . . . . f f . . . 
-        . . . . . . f f . . f f . . . . 
-        . . . . . . . . f f f . . . . . 
-        . . . . . . . . . . . . . . . . 
+        . . . . . b b b b b b . . . . . 
+        . . . b b 9 9 9 9 9 9 b b . . . 
+        . . b b 9 9 9 9 9 9 9 9 b b . . 
+        . b b 9 d 9 9 9 9 9 9 9 9 b b . 
+        . b 9 d 9 9 9 9 9 1 1 1 9 9 b . 
+        b 9 d d 9 9 9 9 9 1 1 1 9 9 9 b 
+        b 9 d 9 9 9 9 9 9 1 1 1 9 9 9 b 
+        b 9 3 9 9 9 9 9 9 9 9 9 1 9 9 b 
+        b 5 3 d 9 9 9 9 9 9 9 9 9 9 9 b 
+        b 5 3 3 9 9 9 9 9 9 9 9 9 d 9 b 
+        b 5 d 3 3 9 9 9 9 9 9 9 d d 9 b 
+        . b 5 3 3 3 d 9 9 9 9 d d 5 b . 
+        . b d 5 3 3 3 3 3 3 3 d 5 b b . 
+        . . b d 5 d 3 3 3 3 5 5 b b . . 
+        . . . b b 5 5 5 5 5 5 b b . . . 
+        . . . . . b b b b b b . . . . . 
         `, SpriteKind.Projectile)
     mySprite2.setPosition(mySprite.x, mySprite.y)
     pause(5000)
@@ -207,14 +219,14 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 let mySprite2: Sprite = null
 let mySprite: Sprite = null
-let mySprite3: Sprite = null
+let renga: Sprite = null
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
 for (let counterX = 0; counterX <= 12; counterX++) {
     for (let counterY = 0; counterY <= 13; counterY++) {
         if (!(counterX % 2 == 0 && counterY % 2 == 1)) {
             if (Math.percentChance(60)) {
-                mySprite3 = sprites.create(img`
+                renga = sprites.create(img`
                     e e e e f e e e e e e e e e e e 
                     e e e e f e e e e e e e e e e e 
                     e e e e f e e e e e e e e e e e 
@@ -232,7 +244,7 @@ for (let counterX = 0; counterX <= 12; counterX++) {
                     e e e e e e e e e e e f e e e e 
                     e e e e e e e e e e e f e e e e 
                     `, SpriteKind.Projectile)
-                mySprite3.setPosition(counterX * 16 + 40, counterY * 16 + 24)
+                renga.setPosition(counterX * 16 + 40, counterY * 16 + 24)
             }
         }
     }
