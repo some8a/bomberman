@@ -1,8 +1,5 @@
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     for (let index = 0; index < 2; index++) {
-        if (mySprite.overlapsWith(renga)) {
-            break;
-        }
         mySprite.setImage(img`
             . . . . . . . . . . . . . 
             . . . f f f f f f . . . . 
@@ -45,6 +42,9 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite.x += 4
         pause(100)
         scene.centerCameraAt(mySprite.x, mySprite.y)
+    }
+    if (mySprite.overlapsWith(renga)) {
+        mySprite.x += -16
     }
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
