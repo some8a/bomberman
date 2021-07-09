@@ -82,7 +82,14 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.renga, function (sprite, otherSprite) {
-	
+    cX = 0
+    cY = 0
+    if (true) {
+        mySprite.x += 0 - (mySprite.x - 8) % 16
+    } else {
+    	
+    }
+    mySprite.y += 0 - (mySprite.y - 8) % 16
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite2 = sprites.create(img`
@@ -108,14 +115,16 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite2.destroy(effects.fire, 500)
 })
 let mySprite2: Sprite = null
+let cY = 0
+let cX = 0
 let mySprite: Sprite = null
 let renga2: Sprite = null
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
 for (let cY = 0; cY <= 13; cY++) {
     for (let cX = 0; cX <= 13; cX++) {
-        if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`)) {
-            if (Math.percentChance(50)) {
+        if (cX != 1) {
+            if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`) && Math.percentChance(50)) {
                 renga2 = sprites.create(img`
                     e e e e e e e e e e f e e e e e 
                     e e e e e e e e e e f e e e e e 
@@ -133,7 +142,7 @@ for (let cY = 0; cY <= 13; cY++) {
                     e e e e f e e e e e e e e e e e 
                     e e e e f e e e e e e e e e e e 
                     f f f f f f f f f f f f f f f f 
-                    `, SpriteKind.Player)
+                    `, SpriteKind.renga)
                 tiles.placeOnTile(renga2, tiles.getTileLocation(cX, cY))
             }
         }
