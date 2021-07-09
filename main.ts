@@ -1,3 +1,26 @@
+namespace SpriteKind {
+    export const renga = SpriteKind.create()
+}
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite.setImage(img`
+        . . . . . . . . . . . . . 
+        . . . . . f f f f . . . . 
+        . . . f f f f f f f f . . 
+        . . f f f f f f c f f f . 
+        . f f f f f f c c f f f . 
+        . f f f c f f f f f f f . 
+        . c c c f f f e e f f c . 
+        . f f f f f e e f f c c . 
+        . f f f b f e e f b f f . 
+        . f f 4 1 f 4 4 f 1 4 f . 
+        . . f e 4 4 4 4 4 e e f . 
+        . f e f b 7 7 7 e 4 4 4 . 
+        . e 4 f 7 7 7 7 e 4 4 e . 
+        . . . f 6 6 6 6 6 e e . . 
+        . . . f f f f f f f . . . 
+        . . . . . . . . . . . . . 
+        `)
+})
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
@@ -83,11 +106,29 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 let mySprite2: Sprite = null
 let mySprite: Sprite = null
-let カウンター = 0
-let renga2 = null
-let counterX = 0
+let renga2: Sprite = null
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
+for (let list2 of tiles.getTilesByType(assets.tile`transparency16`)) {
+    renga2 = sprites.create(img`
+        b b b b b b b b b b b b b b b b 
+        b c b e 4 4 4 4 4 4 4 4 e b c b 
+        b b e 4 4 4 4 4 4 4 4 4 4 e b b 
+        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
+        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
+        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
+        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
+        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
+        b b d 4 4 4 4 4 4 4 4 4 4 d b b 
+        b b d 4 4 4 4 4 4 4 4 4 4 d b b 
+        b b 4 d 4 4 4 4 4 4 4 4 d 4 b b 
+        b b 4 4 d d d d d d d d 4 4 b b 
+        b b c 4 4 4 4 4 4 4 4 4 4 c b b 
+        b b b c c c c c c c c c c b b b 
+        b c b b b b b b b b b b b b c b 
+        b b b b b b b b b b b b b b b b 
+        `, SpriteKind.Player)
+}
 mySprite = sprites.create(img`
     . . . . f f f f . . . . . 
     . . f f f f f f f f . . . 
