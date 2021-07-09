@@ -81,6 +81,9 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . 
         `)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.renga, function (sprite, otherSprite) {
+	
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite2 = sprites.create(img`
         . . . . . b b b b b b . . . . . 
@@ -109,25 +112,32 @@ let mySprite: Sprite = null
 let renga2: Sprite = null
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
-for (let list2 of tiles.getTilesByType(assets.tile`transparency16`)) {
-    renga2 = sprites.create(img`
-        b b b b b b b b b b b b b b b b 
-        b c b e 4 4 4 4 4 4 4 4 e b c b 
-        b b e 4 4 4 4 4 4 4 4 4 4 e b b 
-        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
-        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
-        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
-        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
-        b b 4 4 4 4 4 4 4 4 4 4 4 4 b b 
-        b b d 4 4 4 4 4 4 4 4 4 4 d b b 
-        b b d 4 4 4 4 4 4 4 4 4 4 d b b 
-        b b 4 d 4 4 4 4 4 4 4 4 d 4 b b 
-        b b 4 4 d d d d d d d d 4 4 b b 
-        b b c 4 4 4 4 4 4 4 4 4 4 c b b 
-        b b b c c c c c c c c c c b b b 
-        b c b b b b b b b b b b b b c b 
-        b b b b b b b b b b b b b b b b 
-        `, SpriteKind.Player)
+for (let cY = 0; cY <= 13; cY++) {
+    for (let cX = 0; cX <= 13; cX++) {
+        if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`)) {
+            if (Math.percentChance(50)) {
+                renga2 = sprites.create(img`
+                    e e e e e e e e e e f e e e e e 
+                    e e e e e e e e e e f e e e e e 
+                    e e e e e e e e e e f e e e e e 
+                    f f f f f f f f f f f f f f f f 
+                    e e e e f e e e e e e e e e e e 
+                    e e e e f e e e e e e e e e e e 
+                    e e e e f e e e e e e e e e e e 
+                    f f f f f f f f f f f f f f f f 
+                    e e e e e e e e e e f e e e e e 
+                    e e e e e e e e e e f e e e e e 
+                    e e e e e e e e e e f e e e e e 
+                    f f f f f f f f f f f f f f f f 
+                    e e e e f e e e e e e e e e e e 
+                    e e e e f e e e e e e e e e e e 
+                    e e e e f e e e e e e e e e e e 
+                    f f f f f f f f f f f f f f f f 
+                    `, SpriteKind.Player)
+                tiles.placeOnTile(renga2, tiles.getTileLocation(cX, cY))
+            }
+        }
+    }
 }
 mySprite = sprites.create(img`
     . . . . f f f f . . . . . 
