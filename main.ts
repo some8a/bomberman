@@ -114,7 +114,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . b b 5 5 5 5 5 5 b b . . . 
         . . . . . b b b b b b . . . . . 
         `, SpriteKind.Projectile)
-    mySprite2.setPosition(mySprite.x, mySprite.y)
+    mySprite2.setPosition(Math.round(mySprite.x / 16) * 16 - 8, Math.round(mySprite.y / 16) * 16 - 8)
     pause(5000)
     mySprite2.destroy(effects.fire, 500)
 })
