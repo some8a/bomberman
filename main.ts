@@ -82,14 +82,18 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.renga, function (sprite, otherSprite) {
-    cX = 0
-    cY = 0
-    if (true) {
-        mySprite.x += 0 - (mySprite.x - 8) % 16
+    cX = (mySprite.x - 8) % 16
+    cY = (mySprite.y - 8) % 16
+    if (cX < 8) {
+        mySprite.x += 0 - cX
     } else {
-    	
+        mySprite.x += 0 - cX
     }
-    mySprite.y += 0 - (mySprite.y - 8) % 16
+    if (cY == 0) {
+        mySprite.y += 0 - cY
+    } else {
+        mySprite.y += 0 - cY
+    }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite2 = sprites.create(img`
