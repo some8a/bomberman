@@ -1,11 +1,12 @@
 namespace SpriteKind {
     export const renga = SpriteKind.create()
+    export const fire = SpriteKind.create()
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
-        . . . f f f f f f . . . . 
-        . f f f f f f f f f . . . 
+        . . . . . . . . . . . . . 
+        . . f f f f f f f f . . . 
         . f f f f f f c f f f . . 
         . f f f c f f f c f f f . 
         . c f f c c f f f c c f . 
@@ -21,10 +22,16 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . 
         `)
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.renga, function (sprite, otherSprite) {
+    otherSprite.destroy()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.fire, function (sprite, otherSprite) {
+    game.over(false)
+})
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
-        . . . . . f f f f . . . . 
+        . . . . . . . . . . . . . 
         . . . f f f f f f f f . . 
         . . f f f f f f c f f f . 
         . f f f f f f c c f f f . 
@@ -44,8 +51,8 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
-        . . . . f f f f f f . . . 
-        . . . f f f f f f f f f . 
+        . . . . . . . . . . . . . 
+        . . . f f f f f f f f . . 
         . . f f f c f f f f f f . 
         . f f f c f f f c f f f . 
         . f c c f f f c c f f c . 
@@ -64,7 +71,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
-        . . . . . f f f f . . . . 
+        . . . . . . . . . . . . . 
         . . . f f c c c c f f . . 
         . f f f c c c c c c f f . 
         . f c c c c c c c c c f . 
@@ -116,85 +123,94 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         `, SpriteKind.Projectile)
     mySprite2.setPosition(Math.round(mySprite.x / 16) * 16 - 8, Math.round(mySprite.y / 16) * 16 - 8)
     pause(5000)
-    mySprite.destroy(effects.fire, 500)
-    mySprite3 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 4 4 . . . . . . . 
-        . . . . . . 4 5 5 4 . . . . . . 
-        . . . . . . 2 5 5 2 . . . . . . 
-        . . . . . . . 2 2 . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Player)
-    mySprite3.setPosition(mySprite3.x + 16, mySprite3.y)
-    mySprite3 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 4 4 . . . . . . . 
-        . . . . . . 4 5 5 4 . . . . . . 
-        . . . . . . 2 5 5 2 . . . . . . 
-        . . . . . . . 2 2 . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Player)
-    mySprite3.setPosition(mySprite3.x - 16, mySprite3.y)
-    mySprite3 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 4 4 . . . . . . . 
-        . . . . . . 4 5 5 4 . . . . . . 
-        . . . . . . 2 5 5 2 . . . . . . 
-        . . . . . . . 2 2 . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Player)
-    mySprite3.setPosition(mySprite3.x, mySprite3.y + 16)
-    mySprite3 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 4 4 . . . . . . . 
-        . . . . . . 4 5 5 4 . . . . . . 
-        . . . . . . 2 5 5 2 . . . . . . 
-        . . . . . . . 2 2 . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Player)
-    mySprite3.setPosition(mySprite3.x, mySprite3.y - 16)
+    mySprite2.setKind(SpriteKind.fire)
+    fireR = sprites.create(img`
+        . 3 . . . . . . . . . . . 4 . . 
+        . 3 3 . . . . . . . . . 4 4 . . 
+        . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
+        . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
+        . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
+        . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
+        . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
+        . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
+        . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
+        . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
+        . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
+        . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
+        . 4 4 d d 4 d d d 4 3 d d 4 . . 
+        . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
+        . 4 5 4 . . 4 4 4 . . . 4 4 . . 
+        . 4 4 . . . . . . . . . . 4 4 . 
+        `, SpriteKind.fire)
+    fireR.setPosition(mySprite2.x + 16, mySprite2.y)
+    fireL = sprites.create(img`
+        . 3 . . . . . . . . . . . 4 . . 
+        . 3 3 . . . . . . . . . 4 4 . . 
+        . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
+        . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
+        . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
+        . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
+        . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
+        . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
+        . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
+        . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
+        . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
+        . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
+        . 4 4 d d 4 d d d 4 3 d d 4 . . 
+        . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
+        . 4 5 4 . . 4 4 4 . . . 4 4 . . 
+        . 4 4 . . . . . . . . . . 4 4 . 
+        `, SpriteKind.fire)
+    fireL.setPosition(mySprite2.x - 16, mySprite2.y)
+    fireD = sprites.create(img`
+        . 3 . . . . . . . . . . . 4 . . 
+        . 3 3 . . . . . . . . . 4 4 . . 
+        . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
+        . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
+        . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
+        . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
+        . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
+        . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
+        . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
+        . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
+        . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
+        . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
+        . 4 4 d d 4 d d d 4 3 d d 4 . . 
+        . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
+        . 4 5 4 . . 4 4 4 . . . 4 4 . . 
+        . 4 4 . . . . . . . . . . 4 4 . 
+        `, SpriteKind.fire)
+    fireD.setPosition(mySprite2.x, mySprite2.y + 16)
+    fireU = sprites.create(img`
+        . 3 . . . . . . . . . . . 4 . . 
+        . 3 3 . . . . . . . . . 4 4 . . 
+        . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
+        . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
+        . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
+        . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
+        . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
+        . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
+        . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
+        . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
+        . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
+        . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
+        . 4 4 d d 4 d d d 4 3 d d 4 . . 
+        . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
+        . 4 5 4 . . 4 4 4 . . . 4 4 . . 
+        . 4 4 . . . . . . . . . . 4 4 . 
+        `, SpriteKind.fire)
+    fireU.setPosition(mySprite2.x, mySprite2.y - 16)
+    pause(100)
+    mySprite2.destroy(effects.fire, 500)
+    fireR.destroy(effects.fire, 500)
+    fireL.destroy(effects.fire, 500)
+    fireD.destroy(effects.fire, 500)
+    fireU.destroy(effects.fire, 500)
 })
-let mySprite3: Sprite = null
+let fireU: Sprite = null
+let fireD: Sprite = null
+let fireL: Sprite = null
+let fireR: Sprite = null
 let mySprite2: Sprite = null
 let cY = 0
 let cX = 0
