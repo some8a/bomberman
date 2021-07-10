@@ -2,6 +2,9 @@ namespace SpriteKind {
     export const renga = SpriteKind.create()
     export const fire = SpriteKind.create()
     export const goal = SpriteKind.create()
+    export const spriteItem1 = SpriteKind.create()
+    export const spriteItem = SpriteKind.create()
+    export const kindItem1 = SpriteKind.create()
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
@@ -22,6 +25,27 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         . f f f f f f f f f f . . 
         . . . . . . . . . . . . . 
         `)
+})
+sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprite) {
+    otherSprite.setImage(img`
+        f f f f f f f f f f f f f f f f 
+        f e e e e e e e e e e e e e e f 
+        f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+        f e 4 e e e e e e e e e e e 4 f 
+        b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+        b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+        f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
+        f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+        f e 4 4 4 4 4 4 4 4 4 4 5 5 4 f 
+        f e 4 4 4 4 4 4 4 4 4 4 5 e 4 f 
+        f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+        f e 4 e e e e e e e e e e e 4 f 
+        b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+        b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+        f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
+        f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+        `)
+    tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.renga, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -49,6 +73,27 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . 
         `)
 })
+sprites.onOverlap(SpriteKind.fire, SpriteKind.kindItem1, function (sprite, otherSprite) {
+    otherSprite.setImage(img`
+        . . . . c c c b b b b b . . . . 
+        . . c c b 4 4 4 4 4 4 b b b . . 
+        . c c 4 4 4 4 4 5 4 4 4 4 b c . 
+        . e 4 4 4 4 4 4 4 4 4 5 4 4 e . 
+        e b 4 5 4 4 5 4 4 4 4 4 4 4 b c 
+        e b 4 4 4 4 4 4 4 4 4 4 5 4 4 e 
+        e b b 4 4 4 4 4 4 4 4 4 4 4 b e 
+        . e b 4 4 4 4 4 5 4 4 4 4 b e . 
+        8 7 e e b 4 4 4 4 4 4 b e e 6 8 
+        8 7 2 e e e e e e e e e e 2 7 8 
+        e 6 6 2 2 2 2 2 2 2 2 2 2 6 c e 
+        e c 6 7 6 6 7 7 7 6 6 7 6 c c e 
+        e b e 8 8 c c 8 8 c c c 8 e b e 
+        e e b e c c e e e e e c e b e e 
+        . e e b b 4 4 4 4 4 4 4 4 e e . 
+        . . . c c c c c e e e e e . . . 
+        `)
+    tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
@@ -68,9 +113,6 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . f f f f f f f f f f . 
         . . . . . . . . . . . . . 
         `)
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    bombpower += 1
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSprite) {
     game.over(true)
@@ -215,10 +257,50 @@ let mySprite: Sprite = null
 let renga2: Sprite = null
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
+let spriteGoal = sprites.create(img`
+    e e e e e e e e e e f e e e e e 
+    e e e e e e e e e e f e e e e e 
+    e e e e e e e e e e f e e e e e 
+    f f f f f f f f f f f f f f f f 
+    e e e e f e e e e e e e e e e e 
+    e e e e f e e e e e e e e e e e 
+    e e e e f e e e e e e e e e e e 
+    f f f f f f f f f f f f f f f f 
+    e e e e e e e e e e f e e e e e 
+    e e e e e e e e e e f e e e e e 
+    e e e e e e e e e e f e e e e e 
+    f f f f f f f f f f f f f f f f 
+    e e e e f e e e e e e e e e e e 
+    e e e e f e e e e e e e e e e e 
+    e e e e f e e e e e e e e e e e 
+    f f f f f f f f f f f f f f f f 
+    `, SpriteKind.goal)
+tiles.placeOnRandomTile(spriteGoal, assets.tile`transparency16`)
+tiles.setWallAt(tiles.getTileLocation(spriteGoal.x / 16, spriteGoal.y / 16), true)
+let Item1 = sprites.create(img`
+    e e e e e e e e e e f e e e e e 
+    e e e e e e e e e e f e e e e e 
+    e e e e e e e e e e f e e e e e 
+    f f f f f f f f f f f f f f f f 
+    e e e e f e e e e e e e e e e e 
+    e e e e f e e e e e e e e e e e 
+    e e e e f e e e e e e e e e e e 
+    f f f f f f f f f f f f f f f f 
+    e e e e e e e e e e f e e e e e 
+    e e e e e e e e e e f e e e e e 
+    e e e e e e e e e e f e e e e e 
+    f f f f f f f f f f f f f f f f 
+    e e e e f e e e e e e e e e e e 
+    e e e e f e e e e e e e e e e e 
+    e e e e f e e e e e e e e e e e 
+    f f f f f f f f f f f f f f f f 
+    `, SpriteKind.kindItem1)
+tiles.placeOnRandomTile(Item1, assets.tile`transparency16`)
+tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
 for (let cY = 0; cY <= 13; cY++) {
     for (let cX = 0; cX <= 13; cX++) {
         if (cX != 1) {
-            if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`) && Math.percentChance(50)) {
+            if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`) && Math.percentChance(1)) {
                 renga2 = sprites.create(img`
                     e e e e e e e e e e f e e e e e 
                     e e e e e e e e e e f e e e e e 
