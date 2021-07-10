@@ -47,6 +47,9 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprit
         `)
     tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
 })
+sprites.onOverlap(SpriteKind.fire, SpriteKind.Enemy, function (sprite, otherSprite) {
+    otherSprite.destroy()
+})
 sprites.onOverlap(SpriteKind.fire, SpriteKind.renga, function (sprite, otherSprite) {
     otherSprite.destroy()
 })
@@ -117,6 +120,9 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSprite) {
     game.over(true)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    game.over(false)
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
@@ -136,6 +142,9 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         . . e f f f f f f f e e . 
         . . . . . . . . . . . . . 
         `)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    game.over(false)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite2 = sprites.create(img`
@@ -157,6 +166,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . f f b b b b . . . . . 
         `, SpriteKind.Projectile)
     mySprite2.setPosition(Math.round((mySprite.x + 8) / 16) * 16 - 8, Math.round((mySprite.y + 8) / 16) * 16 - 8)
+    tiles.setWallAt(tiles.getTileLocation(mySprite2.x / 16, mySprite2.y / 16), true)
     pause(5000)
     for (let bombcount = 0; bombcount <= bombpower; bombcount++) {
         fireR = sprites.create(img`
@@ -252,6 +262,7 @@ let fireD: Sprite = null
 let fireL: Sprite = null
 let fireR: Sprite = null
 let mySprite2: Sprite = null
+let enemy1: Sprite = null
 let bombpower = 0
 let mySprite: Sprite = null
 let renga2: Sprite = null
@@ -300,7 +311,7 @@ tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
 for (let cY = 0; cY <= 13; cY++) {
     for (let cX = 0; cX <= 13; cX++) {
         if (cX != 1) {
-            if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`) && Math.percentChance(1)) {
+            if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`) && Math.percentChance(40)) {
                 renga2 = sprites.create(img`
                     e e e e e e e e e e f e e e e e 
                     e e e e e e e e e e f e e e e e 
@@ -347,3 +358,33 @@ mySprite.setPosition(24, 24)
 controller.moveSprite(mySprite)
 scene.cameraFollowSprite(mySprite)
 bombpower = 1
+for (let index = 0; index < 2; index++) {
+    enemy1 = sprites.create(img`
+        ........................
+        ........................
+        ........................
+        ........................
+        ..........ffff..........
+        ........ff1111ff........
+        .......fb111111bf.......
+        .......f11111111f.......
+        ......fd11111111df......
+        ......fd11111111df......
+        ......fddd1111dddf......
+        ......fbdbfddfbdbf......
+        ......fcdcf11fcdcf......
+        .......fb111111bf.......
+        ......fffcdb1bdffff.....
+        ....fc111cbfbfc111cf....
+        ....f1b1b1ffff1b1b1f....
+        ....fbfbffffffbfbfbf....
+        .........ffffff.........
+        ...........fff..........
+        ........................
+        ........................
+        ........................
+        ........................
+        `, SpriteKind.Enemy)
+    tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
+    enemy1.follow(mySprite)
+}
