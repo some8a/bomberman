@@ -53,6 +53,11 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprit
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
+    numOfEnemy += -1
+    mySprite.say(numOfEnemy)
+    if (numOfEnemy == 0) {
+        music.baDing.play()
+    }
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.renga, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -122,7 +127,9 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSprite) {
-    game.over(true)
+    if (numOfEnemy == 0) {
+        game.over(true)
+    }
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
@@ -167,109 +174,108 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . f f b b b b . . . . . 
         `, SpriteKind.Projectile)
     mySprite2.setPosition(Math.round((mySprite.x + 8) / 16) * 16 - 8, Math.round((mySprite.y + 8) / 16) * 16 - 8)
-    pause(500)
-    tiles.setWallAt(tiles.getTileLocation(mySprite2.x / 16, mySprite2.y / 16), true)
     pause(5000)
+    music.bigCrash.play()
     for (let bombcount = 0; bombcount <= bombpower; bombcount++) {
         if ((mySprite2.y + 8) % 32 != 16) {
-            if (mySprite2.x < 100) {
-                fireR = sprites.create(img`
-                    . 3 . . . . . . . . . . . 4 . . 
-                    . 3 3 . . . . . . . . . 4 4 . . 
-                    . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
-                    . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
-                    . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
-                    . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
-                    . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
-                    . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
-                    . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
-                    . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
-                    . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
-                    . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
-                    . 4 4 d d 4 d d d 4 3 d d 4 . . 
-                    . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
-                    . 4 5 4 . . 4 4 4 . . . 4 4 . . 
-                    . 4 4 . . . . . . . . . . 4 4 . 
-                    `, SpriteKind.fire)
-                fireR.setPosition(mySprite2.x + 16 * bombcount, mySprite2.y)
+            fireR = sprites.create(img`
+                . 3 . . . . . . . . . . . 4 . . 
+                . 3 3 . . . . . . . . . 4 4 . . 
+                . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
+                . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
+                . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
+                . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
+                . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
+                . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
+                . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
+                . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
+                . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
+                . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
+                . 4 4 d d 4 d d d 4 3 d d 4 . . 
+                . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
+                . 4 5 4 . . 4 4 4 . . . 4 4 . . 
+                . 4 4 . . . . . . . . . . 4 4 . 
+                `, SpriteKind.fire)
+            fireR.setPosition(mySprite2.x + 16 * bombcount, mySprite2.y)
+            if (fireR.x < 224) {
                 tiles.setWallAt(tiles.getTileLocation(fireR.x / 16, fireR.y / 16), false)
-                pause(100)
-                fireR.destroy(effects.fire, 500)
             }
-            if (mySprite2.x > 32) {
-                fireL = sprites.create(img`
-                    . 3 . . . . . . . . . . . 4 . . 
-                    . 3 3 . . . . . . . . . 4 4 . . 
-                    . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
-                    . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
-                    . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
-                    . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
-                    . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
-                    . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
-                    . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
-                    . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
-                    . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
-                    . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
-                    . 4 4 d d 4 d d d 4 3 d d 4 . . 
-                    . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
-                    . 4 5 4 . . 4 4 4 . . . 4 4 . . 
-                    . 4 4 . . . . . . . . . . 4 4 . 
-                    `, SpriteKind.fire)
-                fireL.setPosition(mySprite2.x - 16 * bombcount, mySprite2.y)
+            pause(100)
+            fireR.destroy(effects.fire, 500)
+            fireL = sprites.create(img`
+                . 3 . . . . . . . . . . . 4 . . 
+                . 3 3 . . . . . . . . . 4 4 . . 
+                . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
+                . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
+                . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
+                . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
+                . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
+                . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
+                . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
+                . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
+                . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
+                . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
+                . 4 4 d d 4 d d d 4 3 d d 4 . . 
+                . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
+                . 4 5 4 . . 4 4 4 . . . 4 4 . . 
+                . 4 4 . . . . . . . . . . 4 4 . 
+                `, SpriteKind.fire)
+            fireL.setPosition(mySprite2.x - 16 * bombcount, mySprite2.y)
+            if (fireL.x > 16) {
                 tiles.setWallAt(tiles.getTileLocation(fireL.x / 16, fireL.y / 16), false)
-                pause(100)
-                fireL.destroy(effects.fire, 500)
             }
+            pause(100)
+            fireL.destroy(effects.fire, 500)
         }
         if ((mySprite2.x + 8) % 32 != 16) {
-            if (mySprite2.y < 100) {
-                fireD = sprites.create(img`
-                    . 3 . . . . . . . . . . . 4 . . 
-                    . 3 3 . . . . . . . . . 4 4 . . 
-                    . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
-                    . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
-                    . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
-                    . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
-                    . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
-                    . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
-                    . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
-                    . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
-                    . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
-                    . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
-                    . 4 4 d d 4 d d d 4 3 d d 4 . . 
-                    . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
-                    . 4 5 4 . . 4 4 4 . . . 4 4 . . 
-                    . 4 4 . . . . . . . . . . 4 4 . 
-                    `, SpriteKind.fire)
-                fireD.setPosition(mySprite2.x, mySprite2.y + 16 * bombcount)
+            fireD = sprites.create(img`
+                . 3 . . . . . . . . . . . 4 . . 
+                . 3 3 . . . . . . . . . 4 4 . . 
+                . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
+                . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
+                . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
+                . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
+                . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
+                . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
+                . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
+                . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
+                . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
+                . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
+                . 4 4 d d 4 d d d 4 3 d d 4 . . 
+                . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
+                . 4 5 4 . . 4 4 4 . . . 4 4 . . 
+                . 4 4 . . . . . . . . . . 4 4 . 
+                `, SpriteKind.fire)
+            fireD.setPosition(mySprite2.x, mySprite2.y + 16 * bombcount)
+            if (fireD.y < 224) {
                 tiles.setWallAt(tiles.getTileLocation(fireD.x / 16, fireD.y / 16), false)
-                pause(100)
-                fireD.destroy(effects.fire, 500)
             }
-            if (mySprite2.y > 32) {
-                fireU = sprites.create(img`
-                    . 3 . . . . . . . . . . . 4 . . 
-                    . 3 3 . . . . . . . . . 4 4 . . 
-                    . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
-                    . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
-                    . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
-                    . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
-                    . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
-                    . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
-                    . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
-                    . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
-                    . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
-                    . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
-                    . 4 4 d d 4 d d d 4 3 d d 4 . . 
-                    . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
-                    . 4 5 4 . . 4 4 4 . . . 4 4 . . 
-                    . 4 4 . . . . . . . . . . 4 4 . 
-                    `, SpriteKind.fire)
-                fireU.setPosition(mySprite2.x, mySprite2.y - 16 * bombcount)
+            pause(100)
+            fireD.destroy(effects.fire, 500)
+            fireU = sprites.create(img`
+                . 3 . . . . . . . . . . . 4 . . 
+                . 3 3 . . . . . . . . . 4 4 . . 
+                . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
+                . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
+                . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
+                . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
+                . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
+                . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
+                . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
+                . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
+                . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
+                . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
+                . 4 4 d d 4 d d d 4 3 d d 4 . . 
+                . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
+                . 4 5 4 . . 4 4 4 . . . 4 4 . . 
+                . 4 4 . . . . . . . . . . 4 4 . 
+                `, SpriteKind.fire)
+            fireU.setPosition(mySprite2.x, mySprite2.y - 16 * bombcount)
+            if (fireU.y > 16) {
                 tiles.setWallAt(tiles.getTileLocation(fireU.x / 16, fireU.y / 16), false)
-                pause(100)
-                fireU.destroy(effects.fire, 500)
             }
+            pause(100)
+            fireU.destroy(effects.fire, 500)
         }
     }
     mySprite2.destroy()
@@ -280,6 +286,7 @@ let fireL: Sprite = null
 let fireR: Sprite = null
 let mySprite2: Sprite = null
 let enemy1: Sprite = null
+let numOfEnemy = 0
 let bombpower = 0
 let mySprite: Sprite = null
 let renga2: Sprite = null
@@ -378,7 +385,8 @@ mySprite.setPosition(24, 24)
 controller.moveSprite(mySprite)
 scene.cameraFollowSprite(mySprite)
 bombpower = 1
-for (let index = 0; index < 2; index++) {
+numOfEnemy = 4
+for (let index = 0; index < numOfEnemy; index++) {
     enemy1 = sprites.create(img`
         . . . . c c c c c c . . . . . . 
         . . . c 6 7 7 7 7 6 c . . . . . 
@@ -397,6 +405,13 @@ for (let index = 0; index < 2; index++) {
         . f 6 1 1 1 1 1 1 6 6 6 f . . . 
         . . c c c c c c c c c f . . . . 
         `, SpriteKind.Enemy)
-    tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
-    enemy1.follow(mySprite, 30)
+    while (true) {
+        tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
+        if (enemy1.x < 80) {
+            enemy1.destroy()
+        } else {
+            break;
+        }
+    }
+    enemy1.follow(mySprite, 20)
 }
