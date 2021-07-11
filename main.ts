@@ -53,11 +53,6 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprit
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
-    numOfEnemy += -1
-    mySprite.say(numOfEnemy)
-    if (numOfEnemy == 0) {
-        music.baDing.play()
-    }
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.renga, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -127,9 +122,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSprite) {
-    if (numOfEnemy == 0) {
-        game.over(true)
-    }
+    game.over(true)
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
@@ -286,7 +279,6 @@ let fireL: Sprite = null
 let fireR: Sprite = null
 let mySprite2: Sprite = null
 let enemy1: Sprite = null
-let numOfEnemy = 0
 let bombpower = 0
 let mySprite: Sprite = null
 let renga2: Sprite = null
@@ -385,8 +377,7 @@ mySprite.setPosition(24, 24)
 controller.moveSprite(mySprite)
 scene.cameraFollowSprite(mySprite)
 bombpower = 1
-numOfEnemy = 4
-for (let index = 0; index < numOfEnemy; index++) {
+for (let index = 0; index < 4; index++) {
     enemy1 = sprites.create(img`
         . . . . c c c c c c . . . . . . 
         . . . c 6 7 7 7 7 6 c . . . . . 
