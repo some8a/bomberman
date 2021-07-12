@@ -121,6 +121,9 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . 
         `)
 })
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.renga, function (sprite, otherSprite) {
+    tiles.placeOnRandomTile(sprite, assets.tile`transparency16`)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSprite) {
     game.over(true)
 })
@@ -144,33 +147,12 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . 
         `)
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    game.over(false)
-})
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite2 = sprites.create(img`
-        . . . . . . . . . . 2 2 2 2 . . 
-        . . . . . c c c c 1 1 2 2 . . . 
-        . . . c c c c c 1 1 1 f b b . . 
-        . . c c c c f f 1 1 b f f f b . 
-        . c c c c f f f 1 1 f f f f b . 
-        . c c c f f f f 1 1 f f f f f b 
-        c c c f f f f f f f f f f f f b 
-        c c c f f f f f f f f f f f f b 
-        c c c f f f f f f f f f f f f b 
-        c c c f f f f f f f f f f f f b 
-        c c c f f f f f f f f f f f f b 
-        . c c c f f f f f f f f f f b . 
-        . f c c f f f f f f f f f f b . 
-        . . f c c f f f f f f f f b . . 
-        . . . f f b f f f f f f b . . . 
-        . . . . . f f b b b b . . . . . 
-        `, SpriteKind.Projectile)
-    mySprite2.setPosition(Math.round((mySprite.x + 8) / 16) * 16 - 8, Math.round((mySprite.y + 8) / 16) * 16 - 8)
+sprites.onCreated(SpriteKind.Projectile, function (sprite) {
+    sprite.setPosition(Math.round((mySprite.x + 8) / 16) * 16 - 8, Math.round((mySprite.y + 8) / 16) * 16 - 8)
     pause(5000)
     music.bigCrash.play()
     for (let bombcount = 0; bombcount <= bombpower; bombcount++) {
-        if ((mySprite2.y + 8) % 32 != 16) {
+        if ((sprite.y + 8) % 32 != 16) {
             fireR = sprites.create(img`
                 . 3 . . . . . . . . . . . 4 . . 
                 . 3 3 . . . . . . . . . 4 4 . . 
@@ -189,7 +171,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 . 4 5 4 . . 4 4 4 . . . 4 4 . . 
                 . 4 4 . . . . . . . . . . 4 4 . 
                 `, SpriteKind.fire)
-            fireR.setPosition(mySprite2.x + 16 * bombcount, mySprite2.y)
+            fireR.setPosition(sprite.x + 16 * bombcount, sprite.y)
             if (fireR.x < 224) {
                 tiles.setWallAt(tiles.getTileLocation(fireR.x / 16, fireR.y / 16), false)
             }
@@ -213,14 +195,14 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 . 4 5 4 . . 4 4 4 . . . 4 4 . . 
                 . 4 4 . . . . . . . . . . 4 4 . 
                 `, SpriteKind.fire)
-            fireL.setPosition(mySprite2.x - 16 * bombcount, mySprite2.y)
+            fireL.setPosition(sprite.x - 16 * bombcount, sprite.y)
             if (fireL.x > 16) {
                 tiles.setWallAt(tiles.getTileLocation(fireL.x / 16, fireL.y / 16), false)
             }
             pause(100)
             fireL.destroy(effects.fire, 500)
         }
-        if ((mySprite2.x + 8) % 32 != 16) {
+        if ((sprite.x + 8) % 32 != 16) {
             fireD = sprites.create(img`
                 . 3 . . . . . . . . . . . 4 . . 
                 . 3 3 . . . . . . . . . 4 4 . . 
@@ -239,7 +221,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 . 4 5 4 . . 4 4 4 . . . 4 4 . . 
                 . 4 4 . . . . . . . . . . 4 4 . 
                 `, SpriteKind.fire)
-            fireD.setPosition(mySprite2.x, mySprite2.y + 16 * bombcount)
+            fireD.setPosition(sprite.x, sprite.y + 16 * bombcount)
             if (fireD.y < 224) {
                 tiles.setWallAt(tiles.getTileLocation(fireD.x / 16, fireD.y / 16), false)
             }
@@ -263,7 +245,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 . 4 5 4 . . 4 4 4 . . . 4 4 . . 
                 . 4 4 . . . . . . . . . . 4 4 . 
                 `, SpriteKind.fire)
-            fireU.setPosition(mySprite2.x, mySprite2.y - 16 * bombcount)
+            fireU.setPosition(sprite.x, sprite.y - 16 * bombcount)
             if (fireU.y > 16) {
                 tiles.setWallAt(tiles.getTileLocation(fireU.x / 16, fireU.y / 16), false)
             }
@@ -271,13 +253,36 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             fireU.destroy(effects.fire, 500)
         }
     }
-    mySprite2.destroy()
+    sprite.destroy()
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    game.over(false)
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite2 = sprites.create(img`
+        . . . . . . . . . . 2 2 2 2 . . 
+        . . . . . c c c c 1 1 2 2 . . . 
+        . . . c c c c c 1 1 1 f b b . . 
+        . . c c c c f f 1 1 b f f f b . 
+        . c c c c f f f 1 1 f f f f b . 
+        . c c c f f f f 1 1 f f f f f b 
+        c c c f f f f f f f f f f f f b 
+        c c c f f f f f f f f f f f f b 
+        c c c f f f f f f f f f f f f b 
+        c c c f f f f f f f f f f f f b 
+        c c c f f f f f f f f f f f f b 
+        . c c c f f f f f f f f f f b . 
+        . f c c f f f f f f f f f f b . 
+        . . f c c f f f f f f f f b . . 
+        . . . f f b f f f f f f b . . . 
+        . . . . . f f b b b b . . . . . 
+        `, SpriteKind.Projectile)
+})
+let mySprite2: Sprite = null
 let fireU: Sprite = null
 let fireD: Sprite = null
 let fireL: Sprite = null
 let fireR: Sprite = null
-let mySprite2: Sprite = null
 let enemy1: Sprite = null
 let bombpower = 0
 let mySprite: Sprite = null
@@ -379,30 +384,23 @@ scene.cameraFollowSprite(mySprite)
 bombpower = 1
 for (let index = 0; index < 4; index++) {
     enemy1 = sprites.create(img`
-        . . . . c c c c c c . . . . . . 
-        . . . c 6 7 7 7 7 6 c . . . . . 
-        . . c 7 7 7 7 7 7 7 7 c . . . . 
-        . c 6 7 7 7 7 7 7 7 7 6 c . . . 
-        . c 7 c 6 6 6 6 c 7 7 7 c . . . 
-        . f 7 6 f 6 6 f 6 7 7 7 f . . . 
-        . f 7 7 7 7 7 7 7 7 7 7 f . . . 
-        . . f 7 7 7 7 6 c 7 7 6 f c . . 
-        . . . f c c c c 7 7 6 f 7 7 c . 
-        . . c 7 2 7 7 7 6 c f 7 7 7 7 c 
-        . c 7 7 2 7 7 c f c 6 7 7 6 c c 
-        c 1 1 1 1 7 6 f c c 6 6 6 c . . 
-        f 1 1 1 1 1 6 6 c 6 6 6 6 f . . 
-        f 6 1 1 1 1 1 6 6 6 6 6 c f . . 
-        . f 6 1 1 1 1 1 1 6 6 6 f . . . 
-        . . c c c c c c c c c f . . . . 
+        . . . c c c c c c . . . . . . . 
+        . . c 6 7 7 7 7 6 c . . . . . . 
+        . c 7 7 7 7 7 7 7 7 c . . . . . 
+        c 6 7 7 7 7 7 7 7 7 6 c . . . . 
+        c 7 c 6 6 6 6 c 7 7 7 c . . . . 
+        f 7 6 f 6 6 f 6 7 7 7 f . . . . 
+        f 7 7 7 7 7 7 7 7 7 7 f . . . . 
+        . f 7 7 7 7 6 c 7 7 6 f . . . . 
+        . . f c c c c 7 7 6 f c c c . . 
+        . . c 6 2 7 7 7 f c c 7 7 7 c . 
+        . c 6 7 7 2 7 7 c f 6 7 7 7 7 c 
+        . c 1 1 1 1 7 6 6 c 6 6 6 c c c 
+        . c 1 1 1 1 1 6 6 6 6 6 6 c . . 
+        . c 6 1 1 1 1 1 6 6 6 6 6 c . . 
+        . . c 6 1 1 1 1 1 7 6 6 c c . . 
+        . . . c c c c c c c c c c . . . 
         `, SpriteKind.Enemy)
-    while (true) {
-        tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
-        if (enemy1.x < 80) {
-            enemy1.destroy()
-        } else {
-            break;
-        }
-    }
+    tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
     enemy1.follow(mySprite, 20)
 }
