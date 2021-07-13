@@ -4,6 +4,24 @@
         "mimeType": "image/x-mkcd-f4",
         "tilemapTile": true
     },
+    "tile1": {
+        "data": "hwQQABAAAAB3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3dw==",
+        "mimeType": "image/x-mkcd-f4",
+        "tilemapTile": true,
+        "displayName": "myTile"
+    },
+    "tile2": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "tilemapTile": true,
+        "displayName": "myTile0"
+    },
+    "tile3": {
+        "data": "hwQQABAAAABmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZg==",
+        "mimeType": "image/x-mkcd-f4",
+        "tilemapTile": true,
+        "displayName": "myTile1"
+    },
     "レベル2": {
         "id": "レベル2",
         "mimeType": "application/mkcd-tilemap",
@@ -22,16 +40,6 @@
         ],
         "displayName": "レベル3"
     },
-    "レベル1": {
-        "id": "レベル1",
-        "mimeType": "application/mkcd-tilemap",
-        "data": "MTAxMDAwMTAwMDAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMTAxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDEwMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAxMDEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMTAxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDEwMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAxMDEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMjIyMjIyMjIyMjIyMjIyMjAyMDAwMDAwMDAwMDAwMjAwMjAyMDIwMjAyMDIwMjIyMDIwMDAwMDAwMDAwMDAyMDAyMDIwMjAyMDIwMjAyMjIwMjAwMDAwMDAwMDAwMDIwMDIwMjAyMDIwMjAyMDIyMjAyMDAwMDAwMDAwMDAwMjAwMjAyMDIwMjAyMDIwMjIyMDIwMDAwMDAwMDAwMDAyMDAyMDIwMjAyMDIwMjAyMjIwMjAwMDAwMDAwMDAwMDIwMDIwMjAyMDIwMjAyMDIyMjAyMDAwMDAwMDAwMDAwMjAwMjAyMDIwMjAyMDIwMjIyMjIyMjIyMjIyMjIyMjIyMg==",
-        "tileset": [
-            "myTiles.transparency16",
-            "sprites.dungeon.floorLight0"
-        ],
-        "displayName": "レベル1"
-    },
     "レベル4": {
         "id": "レベル4",
         "mimeType": "application/mkcd-tilemap",
@@ -49,6 +57,18 @@
             "myTiles.transparency16"
         ],
         "displayName": "レベル5"
+    },
+    "レベル1": {
+        "id": "レベル1",
+        "mimeType": "application/mkcd-tilemap",
+        "data": "MTAxMDAwMTAwMDAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMzAzMDMwMzAzMDAwMDAwMDAwMDAwMDAwMDAwMDEwMTAzMDEwMzAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMTAxMDMwMzAzMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMDEwMzAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDEwMTAzMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAxMDEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMTAxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDEwMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAxMDEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEwMTAwMDEwMDAxMDAwMTAwMDEwMDAxMDAwMTAwMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMDEwMTAxMjIyMjIyMjIyMjIyMjIyMjAyMDAwMDAwMDAwMDAwMjAwMjAyMDIwMjAyMDIwMjIyMDIwMDAwMDAwMDAwMDAyMDAyMDIwMjAyMDIwMjAyMjIwMjAwMDAwMDAwMDAwMDIwMDIwMjAyMDIwMjAyMDIyMjAyMDAwMDAwMDAwMDAwMjAwMjAyMDIwMjAyMDIwMjIyMDIwMDAwMDAwMDAwMDAyMDAyMDIwMjAyMDIwMjAyMjIwMjAwMDAwMDAwMDAwMDIwMDIwMjAyMDIwMjAyMDIyMjAyMDAwMDAwMDAwMDAwMjAwMjAyMDIwMjAyMDIwMjIyMjIyMjIyMjIyMjIyMjIyMg==",
+        "tileset": [
+            "myTiles.transparency16",
+            "sprites.dungeon.floorLight0",
+            "myTiles.tile2",
+            "myTiles.tile3"
+        ],
+        "displayName": "レベル1"
     },
     "*": {
         "mimeType": "image/x-mkcd-f4",
