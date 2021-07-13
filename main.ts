@@ -5,6 +5,7 @@ namespace SpriteKind {
     export const spriteItem1 = SpriteKind.create()
     export const spriteItem = SpriteKind.create()
     export const kindItem1 = SpriteKind.create()
+    export const fire1 = SpriteKind.create()
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
@@ -52,18 +53,15 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprit
     tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
 })
 sprites.onCreated(SpriteKind.fire, function (sprite) {
-    pause(20)
-    sprite.destroy(effects.fire, 500)
+    timer.after(100, function () {
+        sprite.destroy(effects.fire, 500)
+    })
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.renga, function (sprite, otherSprite) {
     otherSprite.destroy()
-})
-sprites.onOverlap(SpriteKind.fire, SpriteKind.fire, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    sprite.destroy()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.fire, function (sprite, otherSprite) {
     game.over(false)
@@ -132,6 +130,11 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     maxbomb += 1
     bombpower += 1
+    if (bombpower > 5) {
+        bombpower = 1
+        maxbomb = 1
+    }
+    mySprite.say(bombpower, 1000)
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.renga, function (sprite, otherSprite) {
     tiles.placeOnRandomTile(sprite, assets.tile`transparency16`)
@@ -160,7 +163,6 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 sprites.onCreated(SpriteKind.Projectile, function (sprite) {
-    sprite.setPosition(Math.round((mySprite.x + 8) / 16) * 16 - 8, Math.round((mySprite.y + 8) / 16) * 16 - 8)
     timer.after(5000, function () {
         numOfBomb += -1
         music.bigCrash.play()
@@ -258,7 +260,8 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
                 }
             }
         }
-        sprite.destroy()
+        sprite.setKind(SpriteKind.fire)
+        sprite.destroy(effects.fire, 500)
     })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -266,7 +269,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (numOfBomb < maxbomb) {
-        numOfBomb += 1
         mySprite2 = sprites.create(img`
             . . . . . . . . . . 2 2 2 2 . . 
             . . . . . c c c c 1 1 2 2 . . . 
@@ -285,6 +287,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . f f b f f f f f f b . . . 
             . . . . . f f b b b b . . . . . 
             `, SpriteKind.Projectile)
+        mySprite2.setPosition(Math.round((mySprite.x + 8) / 16) * 16 - 8, Math.round((mySprite.y + 8) / 16) * 16 - 8)
+        numOfBomb += 1
     }
 })
 let mySprite2: Sprite = null
