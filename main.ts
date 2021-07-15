@@ -6,6 +6,7 @@ namespace SpriteKind {
     export const spriteItem = SpriteKind.create()
     export const kindItem1 = SpriteKind.create()
     export const fire1 = SpriteKind.create()
+    export const check = SpriteKind.create()
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
@@ -128,16 +129,13 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    maxbomb += 1
-    bombpower += 1
-    if (bombpower > 5) {
-        bombpower = 1
-        maxbomb = 1
-    }
-    mySprite.say(bombpower, 1000)
+	
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.renga, function (sprite, otherSprite) {
     tiles.placeOnRandomTile(sprite, assets.tile`transparency16`)
+    if (onlyStart) {
+    	
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSprite) {
     game.over(true)
@@ -264,6 +262,9 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
         sprite.destroy(effects.fire, 500)
     })
 })
+sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
+    numOfEnemy += -1
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     game.over(false)
 })
@@ -303,9 +304,12 @@ let Item1: Sprite = null
 let numOfBomb = 0
 let maxbomb = 0
 let bombpower = 0
+let onlyStart = false
+onlyStart = true
 bombpower = 1
 maxbomb = 1
 numOfBomb = 0
+let numOfEnemy = 4
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
 let spriteGoal = sprites.create(img`
@@ -397,7 +401,7 @@ mySprite = sprites.create(img`
 mySprite.setPosition(24, 24)
 controller.moveSprite(mySprite)
 scene.cameraFollowSprite(mySprite)
-for (let index = 0; index < 4; index++) {
+for (let index = 0; index < numOfEnemy; index++) {
     enemy1 = sprites.create(img`
         . . . c c c c c c . . . . . . . 
         . . c 6 7 7 7 7 6 c . . . . . . 
@@ -419,3 +423,4 @@ for (let index = 0; index < 4; index++) {
     tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
     enemy1.follow(mySprite, 20)
 }
+onlyStart = false
