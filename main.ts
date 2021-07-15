@@ -57,22 +57,23 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprit
             f f f f f f f f f f f f f f f f 
             f e e e e e e e e e e e e e e f 
             f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-            f e 4 e e e 8 8 8 8 8 8 e e 4 f 
-            b e 4 e 4 8 8 8 8 8 8 8 8 5 4 f 
+            f e 4 e e e c c c c c c e e 4 f 
+            b e 4 e 4 c 8 8 8 8 8 8 c 5 4 f 
             b e 4 e 4 8 c c c c c 8 c 5 4 f 
             f e 4 5 5 8 c 5 5 5 5 8 c 5 4 f 
             f e 4 4 4 8 c 4 4 4 4 8 c 4 4 f 
             f e 4 8 8 8 8 8 8 8 8 8 8 8 c f 
             f e 4 8 8 8 8 8 8 8 8 8 8 8 c f 
             f e 4 8 8 8 8 8 8 8 8 8 8 8 c f 
-            f e 4 8 8 8 8 8 f f 8 8 8 8 c f 
-            b e 4 8 8 8 8 8 f f 8 8 8 8 c f 
-            b e 4 8 8 8 8 f f f f 8 8 8 c f 
-            f e 4 c 8 8 8 f f f f 8 8 c c f 
+            f e 4 8 8 8 8 c f f 8 8 8 8 c f 
+            b e 4 8 8 8 8 c f f 8 8 8 8 c f 
+            b e 4 8 8 8 c f f f f 8 8 8 c f 
+            f e 4 c 8 8 c f f f f 8 8 c c f 
             f e 4 4 c c c c f f c c c c 4 f 
             `)
     }
     tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
+    goalVisible = true
 })
 sprites.onCreated(SpriteKind.fire, function (sprite) {
     timer.after(100, function () {
@@ -150,7 +151,13 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-	
+    maxbomb += 1
+    bombpower += 5
+    if (bombpower > 20) {
+        bombpower = 1
+        maxbomb = 1
+    }
+    mySprite.say(bombpower, 1000)
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.renga, function (sprite, otherSprite) {
     if (onlyStart == 1) {
@@ -159,7 +166,7 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.renga, function (sprite, otherSpr
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSprite) {
     if (numOfEnemy <= 0) {
-        game.over(true)
+        game.over(true, effects.hearts)
     }
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -286,25 +293,27 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
 })
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     numOfEnemy += -1
-    if (numOfEnemy <= 0) {
-        spriteGoal.setImage(img`
-            f f f f f f f f f f f f f f f f 
-            f e e e e e e e e e e e e e e f 
-            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-            f e 4 e e e e e e e e e e e 4 f 
-            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
-            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
-            f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
-            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-            f e 4 4 4 4 4 4 4 4 4 4 5 5 4 f 
-            f e 4 4 4 4 4 4 4 4 4 4 e e 4 f 
-            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-            f e 4 e e e e e e e e e e e 4 f 
-            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
-            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
-            f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
-            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-            `)
+    if (goalVisible) {
+        if (numOfEnemy <= 0) {
+            spriteGoal.setImage(img`
+                f f f f f f f f f f f f f f f f 
+                f e e e e e e e e e e e e e e f 
+                f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+                f e 4 e e e e e e e e e e e 4 f 
+                b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+                b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+                f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
+                f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+                f e 4 4 4 4 4 4 4 4 4 4 5 5 4 f 
+                f e 4 4 4 4 4 4 4 4 4 4 e e 4 f 
+                f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+                f e 4 e e e e e e e e e e e 4 f 
+                b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+                b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+                f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
+                f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+                `)
+        }
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -345,16 +354,18 @@ let mySprite: Sprite = null
 let renga2: Sprite = null
 let Item1: Sprite = null
 let spriteGoal: Sprite = null
+let goalVisible = false
 let numOfEnemy = 0
 let numOfBomb = 0
 let maxbomb = 0
 let bombpower = 0
 let onlyStart = 0
 onlyStart = 1
-bombpower = 10
+bombpower = 1
 maxbomb = 1
 numOfBomb = 0
 numOfEnemy = 4
+goalVisible = false
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
 spriteGoal = sprites.create(img`
