@@ -33,24 +33,45 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.kindItem1, function (sprite, oth
     otherSprite.destroy()
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprite) {
-    otherSprite.setImage(img`
-        f f f f f f f f f f f f f f f f 
-        f e e e e e e e e e e e e e e f 
-        f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-        f e 4 e e e e e e e e e e e 4 f 
-        b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
-        b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
-        f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
-        f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-        f e 4 4 4 4 4 4 4 4 4 4 5 5 4 f 
-        f e 4 4 4 4 4 4 4 4 4 4 5 e 4 f 
-        f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-        f e 4 e e e e e e e e e e e 4 f 
-        b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
-        b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
-        f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
-        f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-        `)
+    if (numOfEnemy <= 0) {
+        otherSprite.setImage(img`
+            f f f f f f f f f f f f f f f f 
+            f e e e e e e e e e e e e e e f 
+            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+            f e 4 e e e e e e e e e e e 4 f 
+            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+            f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 5 5 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 e e 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+            f e 4 e e e e e e e e e e e 4 f 
+            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+            f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+            `)
+    } else {
+        otherSprite.setImage(img`
+            f f f f f f f f f f f f f f f f 
+            f e e e e e e e e e e e e e e f 
+            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+            f e 4 e e e 8 8 8 8 8 8 e e 4 f 
+            b e 4 e 4 8 8 8 8 8 8 8 8 5 4 f 
+            b e 4 e 4 8 c c c c c 8 c 5 4 f 
+            f e 4 5 5 8 c 5 5 5 5 8 c 5 4 f 
+            f e 4 4 4 8 c 4 4 4 4 8 c 4 4 f 
+            f e 4 8 8 8 8 8 8 8 8 8 8 8 c f 
+            f e 4 8 8 8 8 8 8 8 8 8 8 8 c f 
+            f e 4 8 8 8 8 8 8 8 8 8 8 8 c f 
+            f e 4 8 8 8 8 8 f f 8 8 8 8 c f 
+            b e 4 8 8 8 8 8 f f 8 8 8 8 c f 
+            b e 4 8 8 8 8 f f f f 8 8 8 c f 
+            f e 4 c 8 8 8 f f f f 8 8 c c f 
+            f e 4 4 c c c c f f c c c c 4 f 
+            `)
+    }
     tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
 })
 sprites.onCreated(SpriteKind.fire, function (sprite) {
@@ -132,13 +153,14 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 	
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.renga, function (sprite, otherSprite) {
-    tiles.placeOnRandomTile(sprite, assets.tile`transparency16`)
-    if (onlyStart) {
-    	
+    if (onlyStart == 1) {
+        tiles.placeOnRandomTile(sprite, assets.tile`transparency16`)
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSprite) {
-    game.over(true)
+    if (numOfEnemy <= 0) {
+        game.over(true)
+    }
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
@@ -264,11 +286,32 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
 })
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     numOfEnemy += -1
+    if (numOfEnemy <= 0) {
+        spriteGoal.setImage(img`
+            f f f f f f f f f f f f f f f f 
+            f e e e e e e e e e e e e e e f 
+            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+            f e 4 e e e e e e e e e e e 4 f 
+            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+            f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 5 5 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 e e 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+            f e 4 e e e e e e e e e e e 4 f 
+            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+            b e 4 e 4 4 4 4 4 4 4 4 4 5 4 f 
+            f e 4 5 5 5 5 5 5 5 5 5 5 5 4 f 
+            f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+            `)
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     game.over(false)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    onlyStart = 0
     if (numOfBomb < maxbomb) {
         mySprite2 = sprites.create(img`
             . . . . . . . . . . 2 2 2 2 . . 
@@ -301,18 +344,20 @@ let enemy1: Sprite = null
 let mySprite: Sprite = null
 let renga2: Sprite = null
 let Item1: Sprite = null
+let spriteGoal: Sprite = null
+let numOfEnemy = 0
 let numOfBomb = 0
 let maxbomb = 0
 let bombpower = 0
-let onlyStart = false
-onlyStart = true
-bombpower = 1
+let onlyStart = 0
+onlyStart = 1
+bombpower = 10
 maxbomb = 1
 numOfBomb = 0
-let numOfEnemy = 4
+numOfEnemy = 4
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
-let spriteGoal = sprites.create(img`
+spriteGoal = sprites.create(img`
     e e e e e e e e e e f e e e e e 
     e e e e e e e e e e f e e e e e 
     e e e e e e e e e e f e e e e e 
@@ -423,4 +468,3 @@ for (let index = 0; index < numOfEnemy; index++) {
     tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
     enemy1.follow(mySprite, 20)
 }
-onlyStart = false
