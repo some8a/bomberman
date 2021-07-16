@@ -31,6 +31,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.kindItem1, function (sprite, otherSprite) {
     bombpower += 1
     otherSprite.destroy()
+    music.powerUp.play()
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprite) {
     if (numOfEnemy <= 0) {
@@ -57,19 +58,19 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprit
             f f f f f f f f f f f f f f f f 
             f e e e e e e e e e e e e e e f 
             f e 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
-            f e 4 e e e c c c c c c e e 4 f 
-            b e 4 e 4 c 8 8 8 8 8 8 c 5 4 f 
-            b e 4 e 4 8 c c c c c 8 c 5 4 f 
-            f e 4 5 5 8 c 5 5 5 5 8 c 5 4 f 
-            f e 4 4 4 8 c 4 4 4 4 8 c 4 4 f 
-            f e 4 8 8 8 8 8 8 8 8 8 8 8 c f 
-            f e 4 8 8 8 8 8 8 8 8 8 8 8 c f 
-            f e 4 8 8 8 8 8 8 8 8 8 8 8 c f 
-            f e 4 8 8 8 8 c f f 8 8 8 8 c f 
-            b e 4 8 8 8 8 c f f 8 8 8 8 c f 
-            b e 4 8 8 8 c f f f f 8 8 8 c f 
-            f e 4 c 8 8 c f f f f 8 8 c c f 
-            f e 4 4 c c c c f f c c c c 4 f 
+            f e 4 e e e b b b b b b e e 4 f 
+            b e 4 e 4 b d d d d d d b 5 4 f 
+            b e 4 e 4 d b b b b b d b 5 4 f 
+            f e 4 5 5 d b 5 5 5 5 d b 5 4 f 
+            f e 4 4 4 d b 4 4 4 4 d b 4 4 f 
+            f e 4 b d d d d d d d d d d b f 
+            f e 4 d d d d d d d d d d d b f 
+            f e 4 d d d d d d d d d d d b f 
+            f e 4 d d d d b f f d d d d b f 
+            b e 4 d d d d b f f d d d d b f 
+            b e 4 d d d b f f f f d d d b f 
+            f e 4 b d d b f f f f d d b b f 
+            f e 4 4 b b b b f f b b b b 4 f 
             `)
     }
     tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
@@ -82,6 +83,9 @@ sprites.onCreated(SpriteKind.fire, function (sprite) {
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
+    if (numOfEnemy <= 0) {
+        music.baDing.play()
+    }
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.renga, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -130,6 +134,11 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.kindItem1, function (sprite, other
         `)
     tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.spriteItem1, function (sprite, otherSprite) {
+    maxbomb += 1
+    otherSprite.destroy()
+    music.powerUp.play()
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
@@ -150,6 +159,27 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . 
         `)
 })
+sprites.onOverlap(SpriteKind.fire, SpriteKind.spriteItem1, function (sprite, otherSprite) {
+    otherSprite.setImage(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 6 6 6 6 . . . . . . 
+        . . . . 6 6 6 5 5 6 6 6 . . . . 
+        . . . 7 7 7 7 6 6 6 6 6 6 . . . 
+        . . 6 7 7 7 7 8 8 8 1 1 6 6 . . 
+        . . 7 7 7 7 7 8 8 8 1 1 5 6 . . 
+        . 6 7 7 7 7 8 8 8 8 8 5 5 6 6 . 
+        . 6 7 7 7 8 8 8 6 6 6 6 5 6 6 . 
+        . 6 6 7 7 8 8 6 6 6 6 6 6 6 6 . 
+        . 6 8 7 7 8 8 6 6 6 6 6 6 6 6 . 
+        . . 6 8 7 7 8 6 6 6 6 6 8 6 . . 
+        . . 6 8 8 7 8 8 6 6 6 8 6 6 . . 
+        . . . 6 8 8 8 8 8 8 8 8 6 . . . 
+        . . . . 6 6 8 8 8 8 6 6 . . . . 
+        . . . . . . 6 6 6 6 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)
+    tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     maxbomb += 1
     bombpower += 5
@@ -166,7 +196,7 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.renga, function (sprite, otherSpr
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSprite) {
     if (numOfEnemy <= 0) {
-        game.over(true, effects.hearts)
+        game.over(true, effects.splatter)
     }
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -388,7 +418,7 @@ spriteGoal = sprites.create(img`
     `, SpriteKind.goal)
 tiles.placeOnRandomTile(spriteGoal, assets.tile`transparency16`)
 tiles.setWallAt(tiles.getTileLocation(spriteGoal.x / 16, spriteGoal.y / 16), true)
-for (let index = 0; index < 2; index++) {
+for (let index = 0; index < 1; index++) {
     Item1 = sprites.create(img`
         e e e e e e e e e e f e e e e e 
         e e e e e e e e e e f e e e e e 
@@ -407,6 +437,28 @@ for (let index = 0; index < 2; index++) {
         e e e e f e e e e e e e e e e e 
         f f f f f f f f f f f f f f f f 
         `, SpriteKind.kindItem1)
+    tiles.placeOnRandomTile(Item1, assets.tile`transparency16`)
+    tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
+}
+for (let index = 0; index < 1; index++) {
+    Item1 = sprites.create(img`
+        e e e e e e e e e e f e e e e e 
+        e e e e e e e e e e f e e e e e 
+        e e e e e e e e e e f e e e e e 
+        f f f f f f f f f f f f f f f f 
+        e e e e f e e e e e e e e e e e 
+        e e e e f e e e e e e e e e e e 
+        e e e e f e e e e e e e e e e e 
+        f f f f f f f f f f f f f f f f 
+        e e e e e e e e e e f e e e e e 
+        e e e e e e e e e e f e e e e e 
+        e e e e e e e e e e f e e e e e 
+        f f f f f f f f f f f f f f f f 
+        e e e e f e e e e e e e e e e e 
+        e e e e f e e e e e e e e e e e 
+        e e e e f e e e e e e e e e e e 
+        f f f f f f f f f f f f f f f f 
+        `, SpriteKind.spriteItem1)
     tiles.placeOnRandomTile(Item1, assets.tile`transparency16`)
     tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
 }
