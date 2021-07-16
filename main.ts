@@ -7,7 +7,29 @@ namespace SpriteKind {
     export const kindItem1 = SpriteKind.create()
     export const fire1 = SpriteKind.create()
     export const check = SpriteKind.create()
+    export const itemNoFiteDamage = SpriteKind.create()
 }
+sprites.onOverlap(SpriteKind.fire, SpriteKind.itemNoFiteDamage, function (sprite, otherSprite) {
+    otherSprite.setImage(img`
+        . . . . . b b b b b b . . . . . 
+        . . . b b 9 9 9 9 9 9 b b . . . 
+        . . b b 9 9 9 9 9 9 9 9 b b . . 
+        . b b 9 d 9 9 9 9 9 9 9 9 b b . 
+        . b 9 d 9 9 9 9 9 1 1 1 9 9 b . 
+        b 9 d d 9 9 9 9 9 1 1 1 9 9 9 b 
+        b 9 d 9 9 9 9 9 9 1 1 1 9 9 9 b 
+        b 9 3 9 9 9 9 9 9 9 9 9 1 9 9 b 
+        b 5 3 d 9 9 9 9 9 9 9 9 9 9 9 b 
+        b 5 3 3 9 9 9 9 9 9 9 9 9 d 9 b 
+        b 5 d 3 3 9 9 9 9 9 9 9 d d 9 b 
+        . b 5 3 3 3 d 9 9 9 9 d d 5 b . 
+        . b d 5 3 3 3 3 3 3 3 d 5 b b . 
+        . . b d 5 d 3 3 3 3 5 5 b b . . 
+        . . . b b 5 5 5 5 5 5 b b . . . 
+        . . . . . b b b b b b . . . . . 
+        `)
+    tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
+})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
@@ -90,8 +112,169 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.Enemy, function (sprite, otherSpri
 sprites.onOverlap(SpriteKind.fire, SpriteKind.renga, function (sprite, otherSprite) {
     otherSprite.destroy()
 })
+function setRenga () {
+    goalVisible = false
+    fireDamage = true
+    spriteGoal = sprites.create(img`
+        e e e e e e e e e e f e e e e e 
+        e e e e e e e e e e f e e e e e 
+        e e e e e e e e e e f e e e e e 
+        f f f f f f f f f f f f f f f f 
+        e e e e f e e e e e e e e e e e 
+        e e e e f e e e e e e e e e e e 
+        e e e e f e e e e e e e e e e e 
+        f f f f f f f f f f f f f f f f 
+        e e e e e e e e e e f e e e e e 
+        e e e e e e e e e e f e e e e e 
+        e e e e e e e e e e f e e e e e 
+        f f f f f f f f f f f f f f f f 
+        e e e e f e e e e e e e e e e e 
+        e e e e f e e e e e e e e e e e 
+        e e e e f e e e e e e e e e e e 
+        f f f f f f f f f f f f f f f f 
+        `, SpriteKind.goal)
+    tiles.placeOnRandomTile(spriteGoal, assets.tile`transparency16`)
+    tiles.setWallAt(tiles.getTileLocation(spriteGoal.x / 16, spriteGoal.y / 16), true)
+    for (let index = 0; index < 1; index++) {
+        ItemDamage = sprites.create(img`
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            f f f f f f f f f f f f f f f f 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            f f f f f f f f f f f f f f f f 
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            f f f f f f f f f f f f f f f f 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            f f f f f f f f f f f f f f f f 
+            `, SpriteKind.itemNoFiteDamage)
+        tiles.placeOnRandomTile(Item1, assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
+    }
+    for (let index = 0; index < 1; index++) {
+        Item1 = sprites.create(img`
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            f f f f f f f f f f f f f f f f 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            f f f f f f f f f f f f f f f f 
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            f f f f f f f f f f f f f f f f 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            f f f f f f f f f f f f f f f f 
+            `, SpriteKind.kindItem1)
+        tiles.placeOnRandomTile(Item1, assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
+    }
+    for (let index = 0; index < 1; index++) {
+        Item1 = sprites.create(img`
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            f f f f f f f f f f f f f f f f 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            f f f f f f f f f f f f f f f f 
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            e e e e e e e e e e f e e e e e 
+            f f f f f f f f f f f f f f f f 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            e e e e f e e e e e e e e e e e 
+            f f f f f f f f f f f f f f f f 
+            `, SpriteKind.spriteItem1)
+        tiles.placeOnRandomTile(Item1, assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
+    }
+    for (let cY = 0; cY <= 13; cY++) {
+        for (let cX = 0; cX <= 13; cX++) {
+            if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`) && Math.percentChance(40)) {
+                renga2 = sprites.create(img`
+                    e e e e e e e e e e f e e e e e 
+                    e e e e e e e e e e f e e e e e 
+                    e e e e e e e e e e f e e e e e 
+                    f f f f f f f f f f f f f f f f 
+                    e e e e f e e e e e e e e e e e 
+                    e e e e f e e e e e e e e e e e 
+                    e e e e f e e e e e e e e e e e 
+                    f f f f f f f f f f f f f f f f 
+                    e e e e e e e e e e f e e e e e 
+                    e e e e e e e e e e f e e e e e 
+                    e e e e e e e e e e f e e e e e 
+                    f f f f f f f f f f f f f f f f 
+                    e e e e f e e e e e e e e e e e 
+                    e e e e f e e e e e e e e e e e 
+                    e e e e f e e e e e e e e e e e 
+                    f f f f f f f f f f f f f f f f 
+                    `, SpriteKind.renga)
+                tiles.placeOnTile(renga2, tiles.getTileLocation(cX, cY))
+                tiles.setWallAt(tiles.getTileLocation(cX, cY), true)
+            }
+        }
+    }
+    mySprite = sprites.create(img`
+        . . . . f f f f . . . . . 
+        . . f f f f f f f f . . . 
+        . f f f f f f c f f f . . 
+        f f f f f f c c f f f c . 
+        f f f c f f f f f f f c . 
+        c c c f f f e e f f c c . 
+        f f f f f e e f f c c f . 
+        f f f b f e e f b f f f . 
+        . f 4 1 f 4 4 f 1 4 f . . 
+        . f e 4 4 4 4 4 4 e f . . 
+        . f f f e e e e f f f . . 
+        f e f b 7 7 7 7 b f e f . 
+        e 4 f 7 7 7 7 7 7 f 4 e . 
+        e e f 6 6 6 6 6 6 f e e . 
+        . . . f f f f f f . . . . 
+        . . . f f . . f f . . . . 
+        `, SpriteKind.Player)
+    mySprite.setPosition(24, 24)
+    controller.moveSprite(mySprite)
+    scene.cameraFollowSprite(mySprite)
+    for (let index = 0; index < numOfEnemy; index++) {
+        enemy1 = sprites.create(img`
+            . . . c c c c c c . . . . . . . 
+            . . c 6 7 7 7 7 6 c . . . . . . 
+            . c 7 7 7 7 7 7 7 7 c . . . . . 
+            c 6 7 7 7 7 7 7 7 7 6 c . . . . 
+            c 7 c 6 6 6 6 c 7 7 7 c . . . . 
+            f 7 6 f 6 6 f 6 7 7 7 f . . . . 
+            f 7 7 7 7 7 7 7 7 7 7 f . . . . 
+            . f 7 7 7 7 6 c 7 7 6 f . . . . 
+            . . f c c c c 7 7 6 f c c c . . 
+            . . c 6 2 7 7 7 f c c 7 7 7 c . 
+            . c 6 7 7 2 7 7 c f 6 7 7 7 7 c 
+            . c 1 1 1 1 7 6 6 c 6 6 6 c c c 
+            . c 1 1 1 1 1 6 6 6 6 6 6 c . . 
+            . c 6 1 1 1 1 1 6 6 6 6 6 c . . 
+            . . c 6 1 1 1 1 1 7 6 6 c c . . 
+            . . . c c c c c c c c c c . . . 
+            `, SpriteKind.Enemy)
+        tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
+        enemy1.follow(mySprite, 20)
+    }
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.fire, function (sprite, otherSprite) {
-    game.over(false)
+    if (fireDamage) {
+        game.over(false)
+    }
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
@@ -158,6 +341,11 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . f f f f f f f f f f . 
         . . . . . . . . . . . . . 
         `)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.itemNoFiteDamage, function (sprite, otherSprite) {
+    ItemDamage = false
+    otherSprite.destroy()
+    music.powerUp.play()
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.spriteItem1, function (sprite, otherSprite) {
     otherSprite.setImage(img`
@@ -380,11 +568,13 @@ let fireD: Sprite = null
 let fireL: Sprite = null
 let fireR: Sprite = null
 let enemy1: Sprite = null
-let mySprite: Sprite = null
 let renga2: Sprite = null
 let Item1: Sprite = null
+let ItemDamage = false
 let spriteGoal: Sprite = null
+let fireDamage = false
 let goalVisible = false
+let mySprite: Sprite = null
 let numOfEnemy = 0
 let numOfBomb = 0
 let maxbomb = 0
@@ -395,139 +585,6 @@ bombpower = 1
 maxbomb = 1
 numOfBomb = 0
 numOfEnemy = 4
-goalVisible = false
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
-spriteGoal = sprites.create(img`
-    e e e e e e e e e e f e e e e e 
-    e e e e e e e e e e f e e e e e 
-    e e e e e e e e e e f e e e e e 
-    f f f f f f f f f f f f f f f f 
-    e e e e f e e e e e e e e e e e 
-    e e e e f e e e e e e e e e e e 
-    e e e e f e e e e e e e e e e e 
-    f f f f f f f f f f f f f f f f 
-    e e e e e e e e e e f e e e e e 
-    e e e e e e e e e e f e e e e e 
-    e e e e e e e e e e f e e e e e 
-    f f f f f f f f f f f f f f f f 
-    e e e e f e e e e e e e e e e e 
-    e e e e f e e e e e e e e e e e 
-    e e e e f e e e e e e e e e e e 
-    f f f f f f f f f f f f f f f f 
-    `, SpriteKind.goal)
-tiles.placeOnRandomTile(spriteGoal, assets.tile`transparency16`)
-tiles.setWallAt(tiles.getTileLocation(spriteGoal.x / 16, spriteGoal.y / 16), true)
-for (let index = 0; index < 1; index++) {
-    Item1 = sprites.create(img`
-        e e e e e e e e e e f e e e e e 
-        e e e e e e e e e e f e e e e e 
-        e e e e e e e e e e f e e e e e 
-        f f f f f f f f f f f f f f f f 
-        e e e e f e e e e e e e e e e e 
-        e e e e f e e e e e e e e e e e 
-        e e e e f e e e e e e e e e e e 
-        f f f f f f f f f f f f f f f f 
-        e e e e e e e e e e f e e e e e 
-        e e e e e e e e e e f e e e e e 
-        e e e e e e e e e e f e e e e e 
-        f f f f f f f f f f f f f f f f 
-        e e e e f e e e e e e e e e e e 
-        e e e e f e e e e e e e e e e e 
-        e e e e f e e e e e e e e e e e 
-        f f f f f f f f f f f f f f f f 
-        `, SpriteKind.kindItem1)
-    tiles.placeOnRandomTile(Item1, assets.tile`transparency16`)
-    tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
-}
-for (let index = 0; index < 1; index++) {
-    Item1 = sprites.create(img`
-        e e e e e e e e e e f e e e e e 
-        e e e e e e e e e e f e e e e e 
-        e e e e e e e e e e f e e e e e 
-        f f f f f f f f f f f f f f f f 
-        e e e e f e e e e e e e e e e e 
-        e e e e f e e e e e e e e e e e 
-        e e e e f e e e e e e e e e e e 
-        f f f f f f f f f f f f f f f f 
-        e e e e e e e e e e f e e e e e 
-        e e e e e e e e e e f e e e e e 
-        e e e e e e e e e e f e e e e e 
-        f f f f f f f f f f f f f f f f 
-        e e e e f e e e e e e e e e e e 
-        e e e e f e e e e e e e e e e e 
-        e e e e f e e e e e e e e e e e 
-        f f f f f f f f f f f f f f f f 
-        `, SpriteKind.spriteItem1)
-    tiles.placeOnRandomTile(Item1, assets.tile`transparency16`)
-    tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
-}
-for (let cY = 0; cY <= 13; cY++) {
-    for (let cX = 0; cX <= 13; cX++) {
-        if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`) && Math.percentChance(40)) {
-            renga2 = sprites.create(img`
-                e e e e e e e e e e f e e e e e 
-                e e e e e e e e e e f e e e e e 
-                e e e e e e e e e e f e e e e e 
-                f f f f f f f f f f f f f f f f 
-                e e e e f e e e e e e e e e e e 
-                e e e e f e e e e e e e e e e e 
-                e e e e f e e e e e e e e e e e 
-                f f f f f f f f f f f f f f f f 
-                e e e e e e e e e e f e e e e e 
-                e e e e e e e e e e f e e e e e 
-                e e e e e e e e e e f e e e e e 
-                f f f f f f f f f f f f f f f f 
-                e e e e f e e e e e e e e e e e 
-                e e e e f e e e e e e e e e e e 
-                e e e e f e e e e e e e e e e e 
-                f f f f f f f f f f f f f f f f 
-                `, SpriteKind.renga)
-            tiles.placeOnTile(renga2, tiles.getTileLocation(cX, cY))
-            tiles.setWallAt(tiles.getTileLocation(cX, cY), true)
-        }
-    }
-}
-mySprite = sprites.create(img`
-    . . . . f f f f . . . . . 
-    . . f f f f f f f f . . . 
-    . f f f f f f c f f f . . 
-    f f f f f f c c f f f c . 
-    f f f c f f f f f f f c . 
-    c c c f f f e e f f c c . 
-    f f f f f e e f f c c f . 
-    f f f b f e e f b f f f . 
-    . f 4 1 f 4 4 f 1 4 f . . 
-    . f e 4 4 4 4 4 4 e f . . 
-    . f f f e e e e f f f . . 
-    f e f b 7 7 7 7 b f e f . 
-    e 4 f 7 7 7 7 7 7 f 4 e . 
-    e e f 6 6 6 6 6 6 f e e . 
-    . . . f f f f f f . . . . 
-    . . . f f . . f f . . . . 
-    `, SpriteKind.Player)
-mySprite.setPosition(24, 24)
-controller.moveSprite(mySprite)
-scene.cameraFollowSprite(mySprite)
-for (let index = 0; index < numOfEnemy; index++) {
-    enemy1 = sprites.create(img`
-        . . . c c c c c c . . . . . . . 
-        . . c 6 7 7 7 7 6 c . . . . . . 
-        . c 7 7 7 7 7 7 7 7 c . . . . . 
-        c 6 7 7 7 7 7 7 7 7 6 c . . . . 
-        c 7 c 6 6 6 6 c 7 7 7 c . . . . 
-        f 7 6 f 6 6 f 6 7 7 7 f . . . . 
-        f 7 7 7 7 7 7 7 7 7 7 f . . . . 
-        . f 7 7 7 7 6 c 7 7 6 f . . . . 
-        . . f c c c c 7 7 6 f c c c . . 
-        . . c 6 2 7 7 7 f c c 7 7 7 c . 
-        . c 6 7 7 2 7 7 c f 6 7 7 7 7 c 
-        . c 1 1 1 1 7 6 6 c 6 6 6 c c c 
-        . c 1 1 1 1 1 6 6 6 6 6 6 c . . 
-        . c 6 1 1 1 1 1 6 6 6 6 6 c . . 
-        . . c 6 1 1 1 1 1 7 6 6 c c . . 
-        . . . c c c c c c c c c c . . . 
-        `, SpriteKind.Enemy)
-    tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
-    enemy1.follow(mySprite, 20)
-}
+setRenga()
