@@ -135,7 +135,7 @@ function setRenga () {
         `, SpriteKind.goal)
     tiles.placeOnRandomTile(spriteGoal, assets.tile`transparency16`)
     tiles.setWallAt(tiles.getTileLocation(spriteGoal.x / 16, spriteGoal.y / 16), true)
-    for (let index = 0; index < 1; index++) {
+    if (Math.percentChance(10)) {
         ItemDamage = sprites.create(img`
             e e e e e e e e e e f e e e e e 
             e e e e e e e e e e f e e e e e 
@@ -154,8 +154,8 @@ function setRenga () {
             e e e e f e e e e e e e e e e e 
             f f f f f f f f f f f f f f f f 
             `, SpriteKind.itemNoFiteDamage)
-        tiles.placeOnRandomTile(Item1, assets.tile`transparency16`)
-        tiles.setWallAt(tiles.getTileLocation(Item1.x / 16, Item1.y / 16), true)
+        tiles.placeOnRandomTile(ItemDamage, assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(ItemDamage.x / 16, ItemDamage.y / 16), true)
     }
     for (let index = 0; index < 1; index++) {
         Item1 = sprites.create(img`
@@ -343,7 +343,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.itemNoFiteDamage, function (sprite, otherSprite) {
-    ItemDamage = false
+    fireDamage = false
     otherSprite.destroy()
     music.powerUp.play()
 })
@@ -370,10 +370,12 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.spriteItem1, function (sprite, oth
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     maxbomb += 1
-    bombpower += 5
-    if (bombpower > 20) {
+    bombpower += 1
+    fireDamage = false
+    if (bombpower > 10) {
         bombpower = 1
         maxbomb = 1
+        fireDamage = true
     }
     mySprite.say(bombpower, 1000)
 })
@@ -570,7 +572,7 @@ let fireR: Sprite = null
 let enemy1: Sprite = null
 let renga2: Sprite = null
 let Item1: Sprite = null
-let ItemDamage = false
+let ItemDamage: Sprite = null
 let spriteGoal: Sprite = null
 let fireDamage = false
 let goalVisible = false
