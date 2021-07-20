@@ -35,25 +35,32 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.itemNoFiteDamage, function (sprite
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . 
-        . . f f f f f f f f . . . 
+        . . . f f f f f f . . . . 
+        . f f f f f f f f f . . . 
         . f f f f f f c f f f . . 
-        . f f f c f f f c f f f . 
-        . c f f c c f f f c c f . 
-        . c c f f f f e f f f f . 
-        . f f f f f f e e f f f . 
-        . f e e f b f e e f f . . 
-        . f e 4 e 1 f 4 4 f f . . 
-        . f f f e e 4 4 4 f . . . 
-        . . f e 4 4 e e f f . . . 
-        . . f e 4 4 e 7 7 f . . . 
-        . f f f e e f 6 6 f f . . 
+        f f f f c f f f c f f f . 
+        f c f f c c f f f c c f f 
+        f c c f f f f e f f f f f 
+        f f f f f f f e e f f f . 
+        f f e e f b f e e f f f . 
+        f f e 4 e 1 f 4 4 f f . . 
+        . f f f e 4 4 4 4 f . . . 
+        . 4 4 4 e e e e f f . . . 
+        . e 4 4 e 7 7 7 7 f . . . 
+        . f e e f 6 6 6 6 f f . . 
         . f f f f f f f f f f . . 
-        . . . . . . . . . . . . . 
+        . . f f . . . f f f . . . 
         `)
+    if ((mySprite.y - 24) % 32 < 8) {
+        mySprite.y += 0 - (mySprite.y - 24) % 32
+    }
+    if ((mySprite.y - 24) % 32 > 24) {
+        mySprite.y += 32 - (mySprite.y - 24) % 32
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.kindItem1, function (sprite, otherSprite) {
     bombpower += 1
+    mySprite.say("POWER UP!", 1000)
     otherSprite.destroy()
     music.powerUp.play()
 })
@@ -238,22 +245,28 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.fire, function (sprite, otherSpr
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . 
+        . . . . . f f f f . . . . 
         . . . f f f f f f f f . . 
         . . f f f f f f c f f f . 
-        . f f f f f f c c f f f . 
-        . f f f c f f f f f f f . 
-        . c c c f f f e e f f c . 
-        . f f f f f e e f f c c . 
-        . f f f b f e e f b f f . 
-        . f f 4 1 f 4 4 f 1 4 f . 
-        . . f e 4 4 4 4 4 e e f . 
-        . f e f b 7 7 7 e 4 4 4 . 
+        f f f f f f f c c f f f c 
+        f f f f c f f f f f f f c 
+        . c c c f f f e e f f c c 
+        . f f f f f e e f f c c f 
+        . f f f b f e e f b f f f 
+        . f f 4 1 f 4 4 f 1 4 f f 
+        . . f e 4 4 4 4 4 e e f e 
+        . f e f b 7 7 7 e 4 4 4 e 
         . e 4 f 7 7 7 7 e 4 4 e . 
         . . . f 6 6 6 6 6 e e . . 
         . . . f f f f f f f . . . 
-        . . . . . . . . . . . . . 
+        . . . f f f . . . . . . . 
         `)
+    if ((mySprite.x - 24) % 32 < 8) {
+        mySprite.x += 0 - (mySprite.x - 24) % 32
+    }
+    if ((mySprite.x - 24) % 32 > 24) {
+        mySprite.x += 32 - (mySprite.x - 24) % 32
+    }
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.kindItem1, function (sprite, otherSprite) {
     otherSprite.setImage(img`
@@ -278,31 +291,39 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.kindItem1, function (sprite, other
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.spriteItem1, function (sprite, otherSprite) {
     maxbomb += 1
+    mySprite.say("GET BOMB!", 1000)
     otherSprite.destroy()
     music.powerUp.play()
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . 
-        . . . f f f f f f f f . . 
+        . . . . f f f f f f . . . 
+        . . . f f f f f f f f f . 
         . . f f f c f f f f f f . 
-        . f f f c f f f c f f f . 
-        . f c c f f f c c f f c . 
-        . f f f f e f f f f c c . 
-        . f f f e e f f f f f f . 
-        . . f f e e f b f e e f . 
+        . f f f c f f f c f f f f 
+        f f c c f f f c c f f c f 
+        f f f f f e f f f f c c f 
+        . f f f e e f f f f f f f 
+        . . f f e e f b f e e f f 
         . . f f 4 4 f 1 e 4 e f . 
         . . . f 4 4 4 e e f f f . 
         . . . f f e e 4 4 e f . . 
         . . . f 7 7 e 4 4 e f . . 
         . . f f 6 6 f e e f f f . 
         . . f f f f f f f f f f . 
-        . . . . . . . . . . . . . 
+        . . . f f f . . . f f . . 
         `)
+    if ((mySprite.y - 24) % 32 < 8) {
+        mySprite.y += 0 - (mySprite.y - 24) % 32
+    }
+    if ((mySprite.y - 24) % 32 > 24) {
+        mySprite.y += 32 - (mySprite.y - 24) % 32
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.itemNoFiteDamage, function (sprite, otherSprite) {
     fireDamage = false
+    mySprite.say("FIRE OK!", 1000)
     otherSprite.destroy()
     music.powerUp.play()
 })
@@ -332,15 +353,19 @@ sprites.onOverlap(SpriteKind.Eraser, SpriteKind.renga, function (sprite, otherSp
     sprite.destroy()
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    maxbomb += 1
-    bombpower += 1
-    fireDamage = false
-    if (bombpower > 5) {
-        bombpower = 1
-        maxbomb = 1
-        fireDamage = true
+    if (mySprite.x == 24 && mySprite.y == 24) {
+        if (bombpower >= 5) {
+            bombpower = 1
+            maxbomb = 1
+            fireDamage = true
+            mySprite.say("CHEAT OFF", 1000)
+        } else {
+            bombpower = 5
+            maxbomb = 5
+            fireDamage = false
+            mySprite.say("CHEAT ON", 1000)
+        }
     }
-    mySprite.say(bombpower, 1000)
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.renga, function (sprite, otherSprite) {
     if (onlyStart == 1) {
@@ -355,22 +380,28 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSpr
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . 
+        . . . . . f f f f . . . . 
         . . . f f c c c c f f . . 
         . f f f c c c c c c f f . 
-        . f c c c c c c c c c f . 
-        . c c c c f c c c c c c . 
-        . f f f f c c c c f c c . 
-        . f f f f c c f c c c f . 
-        . f f f f f f f f f f f . 
-        . f f f f f f f f f f f . 
+        f f c c c c c c c c c f f 
+        f c c c c f c c c c c c f 
+        . f f f f c c c c f c c f 
+        . f f f f c c f c c c f f 
+        . f f f f f f f f f f f f 
+        . f f f f f f f f f f f f 
         . . f f f f f f f f f f . 
         . . e f f f f f f f f f . 
-        . . e f f f f f f f f e . 
-        . . 4 c 7 7 7 7 7 e 4 4 . 
+        . . e f f f f f f f f e f 
+        . . 4 c 7 7 7 7 7 e 4 4 e 
         . . e f f f f f f f e e . 
-        . . . . . . . . . . . . . 
+        . . . f f f . . . . . . . 
         `)
+    if ((mySprite.x - 24) % 32 < 8) {
+        mySprite.x += 0 - (mySprite.x - 24) % 32
+    }
+    if ((mySprite.x - 24) % 32 > 24) {
+        mySprite.x += 32 - (mySprite.x - 24) % 32
+    }
 })
 sprites.onCreated(SpriteKind.Projectile, function (sprite) {
     timer.after(5000, function () {
