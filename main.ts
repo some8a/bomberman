@@ -59,10 +59,29 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.kindItem1, function (sprite, otherSprite) {
-    bombpower += 1
-    mySprite.say("POWER UP!", 1000)
-    otherSprite.destroy()
-    music.powerUp.play()
+    if (otherSprite.image.equals(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 4 4 4 4 . . . . . . 
+        . . . . 4 4 4 5 5 4 4 4 . . . . 
+        . . . 3 3 3 3 4 4 4 4 4 4 . . . 
+        . . 4 3 3 3 3 2 2 2 1 1 4 4 . . 
+        . . 3 3 3 3 3 2 2 2 1 1 5 4 . . 
+        . 4 3 3 3 3 2 2 2 2 2 5 5 4 4 . 
+        . 4 3 3 3 2 2 2 4 4 4 4 5 4 4 . 
+        . 4 4 3 3 2 2 4 4 4 4 4 4 4 4 . 
+        . 4 2 3 3 2 2 4 4 4 4 4 4 4 4 . 
+        . . 4 2 3 3 2 4 4 4 4 4 2 4 . . 
+        . . 4 2 2 3 2 2 4 4 4 2 4 4 . . 
+        . . . 4 2 2 2 2 2 2 2 2 4 . . . 
+        . . . . 4 4 2 2 2 2 4 4 . . . . 
+        . . . . . . 4 4 4 4 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)) {
+        bombpower += 1
+        mySprite.say("POWER UP!", 1000)
+        otherSprite.destroy()
+        music.powerUp.play()
+    }
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.goal, function (sprite, otherSprite) {
     if (numOfEnemy <= 0) {
@@ -290,10 +309,29 @@ sprites.onOverlap(SpriteKind.fire, SpriteKind.kindItem1, function (sprite, other
     tiles.setWallAt(tiles.getTileLocation(otherSprite.x / 16, otherSprite.y / 16), false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.spriteItem1, function (sprite, otherSprite) {
-    maxbomb += 1
-    mySprite.say("GET BOMB!", 1000)
-    otherSprite.destroy()
-    music.powerUp.play()
+    if (otherSprite.image.equals(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 6 6 6 6 . . . . . . 
+        . . . . 6 6 6 5 5 6 6 6 . . . . 
+        . . . 7 7 7 7 6 6 6 6 6 6 . . . 
+        . . 6 7 7 7 7 8 8 8 1 1 6 6 . . 
+        . . 7 7 7 7 7 8 8 8 1 1 5 6 . . 
+        . 6 7 7 7 7 8 8 8 8 8 5 5 6 6 . 
+        . 6 7 7 7 8 8 8 6 6 6 6 5 6 6 . 
+        . 6 6 7 7 8 8 6 6 6 6 6 6 6 6 . 
+        . 6 8 7 7 8 8 6 6 6 6 6 6 6 6 . 
+        . . 6 8 7 7 8 6 6 6 6 6 8 6 . . 
+        . . 6 8 8 7 8 8 6 6 6 8 6 6 . . 
+        . . . 6 8 8 8 8 8 8 8 8 6 . . . 
+        . . . . 6 6 8 8 8 8 6 6 . . . . 
+        . . . . . . 6 6 6 6 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)) {
+        maxbomb += 1
+        mySprite.say("GET BOMB!", 1000)
+        otherSprite.destroy()
+        music.powerUp.play()
+    }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
@@ -322,10 +360,29 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.itemNoFiteDamage, function (sprite, otherSprite) {
-    fireDamage = false
-    mySprite.say("FIRE OK!", 1000)
-    otherSprite.destroy()
-    music.powerUp.play()
+    if (otherSprite.image.equals(img`
+        . . . . . b b b b b b . . . . . 
+        . . . b b 9 9 9 9 9 9 b b . . . 
+        . . b b 9 9 9 9 9 9 9 9 b b . . 
+        . b b 9 d 9 9 9 9 9 9 9 9 b b . 
+        . b 9 d 9 9 9 9 9 1 1 1 9 9 b . 
+        b 9 d d 9 9 9 9 9 1 1 1 9 9 9 b 
+        b 9 d 9 9 9 9 9 9 1 1 1 9 9 9 b 
+        b 9 3 9 9 9 9 9 9 9 9 9 1 9 9 b 
+        b 5 3 d 9 9 9 9 9 9 9 9 9 9 9 b 
+        b 5 3 3 9 9 9 9 9 9 9 9 9 d 9 b 
+        b 5 d 3 3 9 9 9 9 9 9 9 d d 9 b 
+        . b 5 3 3 3 d 9 9 9 9 d d 5 b . 
+        . b d 5 3 3 3 3 3 3 3 d 5 b b . 
+        . . b d 5 d 3 3 3 3 5 5 b b . . 
+        . . . b b 5 5 5 5 5 5 b b . . . 
+        . . . . . b b b b b b . . . . . 
+        `)) {
+        fireDamage = false
+        mySprite.say("FIRE OK!", 1000)
+        otherSprite.destroy()
+        music.powerUp.play()
+    }
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.spriteItem1, function (sprite, otherSprite) {
     otherSprite.setImage(img`
@@ -354,12 +411,24 @@ sprites.onOverlap(SpriteKind.Eraser, SpriteKind.renga, function (sprite, otherSp
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.x == 24 && mySprite.y == 24) {
-        if (bombpower >= 5) {
-            bombpower = 1
-            maxbomb = 1
-            fireDamage = true
-            mySprite.say("CHEAT OFF", 1000)
-        } else {
+        if (mySprite.image.equals(img`
+            . . . . . . . . . . . . . 
+            . . . . . f f f f . . . . 
+            . . . f f c c c c f f . . 
+            . f f f c c c c c c f f . 
+            f f c c c c c c c c c f f 
+            f c c c c f c c c c c c f 
+            . f f f f c c c c f c c f 
+            . f f f f c c f c c c f f 
+            . f f f f f f f f f f f f 
+            . f f f f f f f f f f f f 
+            . . f f f f f f f f f f . 
+            . . e f f f f f f f f f . 
+            . . e f f f f f f f f e f 
+            . . 4 c 7 7 7 7 7 e 4 4 e 
+            . . e f f f f f f f e e . 
+            . . . f f f . . . . . . . 
+            `)) {
             bombpower = 5
             maxbomb = 5
             fireDamage = false
@@ -405,6 +474,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 sprites.onCreated(SpriteKind.Projectile, function (sprite) {
     timer.after(5000, function () {
+        tiles.setWallAt(tiles.getTileLocation(sprite.x / 16, sprite.y / 16), false)
         numOfBomb += -1
         music.bigCrash.play()
         for (let bombcount = 0; bombcount <= bombpower; bombcount++) {
@@ -556,6 +626,10 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             `, SpriteKind.Projectile)
         mySprite2.setPosition(Math.round((mySprite.x + 8) / 16) * 16 - 8, Math.round((mySprite.y + 8) / 16) * 16 - 8)
         numOfBomb += 1
+        while (mySprite.overlapsWith(mySprite2)) {
+            pause(100)
+        }
+        tiles.setWallAt(tiles.getTileLocation(mySprite2.x / 16, mySprite2.y / 16), true)
     }
 })
 let mySprite2: Sprite = null
