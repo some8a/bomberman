@@ -39,7 +39,10 @@ function clearStage () {
     for (let 値 of sprites.allOfKind(SpriteKind.spriteItem1)) {
         値.destroy()
     }
-    for (let 値 of sprites.allOfKind(SpriteKind.spriteItem)) {
+    for (let 値 of sprites.allOfKind(SpriteKind.kindItem1)) {
+        値.destroy()
+    }
+    for (let 値 of sprites.allOfKind(SpriteKind.itemNoFiteDamage)) {
         値.destroy()
     }
     for (let 値 of sprites.allOfKind(SpriteKind.Projectile)) {
@@ -187,6 +190,8 @@ function setSprite () {
         tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
         enemy1.follow(mySprite, 20)
     }
+    pause(100)
+    game.splash("Stage " + convertToText(stageLevel))
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.kindItem1, function (sprite, otherSprite) {
     if (otherSprite.image.equals(img`
@@ -575,7 +580,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSpr
     if (goalVisible) {
         if (numOfEnemy <= 0) {
             if (stageLevel < 5) {
-                game.showLongText("Stage " + convertToText(stageLevel) + " crear", DialogLayout.Center)
+                game.splash("Stage " + convertToText(stageLevel) + " crear")
                 stageLevel += 1
                 clearStage()
                 setRenga()
