@@ -113,7 +113,6 @@ function setSprite () {
     numOfEnemy = stageLevel
     onlyStart = true
     if (stageLevel > 4) {
-        numOfEnemy += 1
         enemy1 = sprites.create(img`
             ........................
             ........................
