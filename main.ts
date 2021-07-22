@@ -113,82 +113,103 @@ function setSprite () {
     mySprite.setPosition(24, 24)
     controller.moveSprite(mySprite)
     scene.cameraFollowSprite(mySprite)
-    numOfEnemy = stageLevel
     onlyStart = true
-    for (let カウンター = 0; カウンター <= numOfEnemy - 1; カウンター++) {
-        if (カウンター < 3) {
-            enemy1 = sprites.create(img`
-                . . . c c c c c c . . . . . . . 
-                . . c 6 7 7 7 7 6 c . . . . . . 
-                . c 7 7 7 7 7 7 7 7 c . . . . . 
-                c 6 7 7 7 7 7 7 7 7 6 c . . . . 
-                c 7 c 6 6 6 6 c 7 7 7 c . . . . 
-                f 7 6 f 6 6 f 6 7 7 7 f . . . . 
-                f 7 7 7 7 7 7 7 7 7 7 f . . . . 
-                . f 7 7 7 7 6 c 7 7 6 f . . . . 
-                . . f c c c c 7 7 6 f c c c . . 
-                . . c 6 2 7 7 7 f c c 7 7 7 c . 
-                . c 6 7 7 2 7 7 c f 6 7 7 7 7 c 
-                . c 1 1 1 1 7 6 6 c 6 6 6 c c c 
-                . c 1 1 1 1 1 6 6 6 6 6 6 c . . 
-                . c 6 1 1 1 1 1 6 6 6 6 6 c . . 
-                . . c 6 1 1 1 1 1 7 6 6 c c . . 
-                . . . c c c c c c c c c c . . . 
-                `, SpriteKind.Enemy)
-            tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
-            enemy1.follow(mySprite, 20)
-        } else {
-            enemy1 = sprites.create(img`
-                . . f f f . . . . . . . . f f f 
-                . f f c c . . . . . . f c b b c 
-                f f c c . . . . . . f c b b c . 
-                f c f c . . . . . . f b c c c . 
-                f f f c c . c c . f c b b c c . 
-                f f c 3 c c 3 c c f b c b b c . 
-                f f b 3 b c 3 b c f b c c b c . 
-                . c b b b b b b c b b c c c . . 
-                . c 1 b b b 1 b b c c c c . . . 
-                c b b b b b b b b b c c . . . . 
-                c b c b b b c b b b b f . . . . 
-                f b 1 f f f 1 b b b b f c . . . 
-                f b b b b b b b b b b f c c . . 
-                . f b b b b b b b b c f . . . . 
-                . . f b b b b b b c f . . . . . 
-                . . . f f f f f f f . . . . . . 
-                `, SpriteKind.Enemy)
-            tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
-            enemy1.follow(mySprite, 80)
-            if (カウンター == 4) {
-                enemy1 = sprites.create(img`
-                    ........................
-                    ........................
-                    ........................
-                    ........................
-                    ..........ffff..........
-                    ........ff1111ff........
-                    .......fb111111bf.......
-                    .......f11111111f.......
-                    ......fd11111111df......
-                    ......fd11111111df......
-                    ......fddd1111dddf......
-                    ......fbdbfddfbdbf......
-                    ......fcdcf11fcdcf......
-                    .......fb111111bf.......
-                    ......fffcdb1bdffff.....
-                    ....fc111cbfbfc111cf....
-                    ....f1b1b1ffff1b1b1f....
-                    ....fbfbffffffbfbfbf....
-                    .........ffffff.........
-                    ...........fff..........
-                    ........................
-                    ........................
-                    ........................
-                    ........................
-                    `, SpriteKind.Enemy2)
-                tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
-                enemy1.follow(mySprite, 20)
-            }
-        }
+    enemy1 = sprites.create(img`
+        . . . c c c c c c . . . . . . . 
+        . . c 6 7 7 7 7 6 c . . . . . . 
+        . c 7 7 7 7 7 7 7 7 c . . . . . 
+        c 6 7 7 7 7 7 7 7 7 6 c . . . . 
+        c 7 c 6 6 6 6 c 7 7 7 c . . . . 
+        f 7 6 f 6 6 f 6 7 7 7 f . . . . 
+        f 7 7 7 7 7 7 7 7 7 7 f . . . . 
+        . f 7 7 7 7 6 c 7 7 6 f . . . . 
+        . . f c c c c 7 7 6 f c c c . . 
+        . . c 6 2 7 7 7 f c c 7 7 7 c . 
+        . c 6 7 7 2 7 7 c f 6 7 7 7 7 c 
+        . c 1 1 1 1 7 6 6 c 6 6 6 c c c 
+        . c 1 1 1 1 1 6 6 6 6 6 6 c . . 
+        . c 6 1 1 1 1 1 6 6 6 6 6 c . . 
+        . . c 6 1 1 1 1 1 7 6 6 c c . . 
+        . . . c c c c c c c c c c . . . 
+        `, SpriteKind.Enemy)
+    tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
+    enemy1.follow(mySprite, 20)
+    numOfEnemy = 1
+    if (stageLevel >= 2) {
+        enemy1 = sprites.create(img`
+            . . . c c c c c c . . . . . . . 
+            . . c 6 7 7 7 7 6 c . . . . . . 
+            . c 7 7 7 7 7 7 7 7 c . . . . . 
+            c 6 7 7 7 7 7 7 7 7 6 c . . . . 
+            c 7 c 6 6 6 6 c 7 7 7 c . . . . 
+            f 7 6 f 6 6 f 6 7 7 7 f . . . . 
+            f 7 7 7 7 7 7 7 7 7 7 f . . . . 
+            . f 7 7 7 7 6 c 7 7 6 f . . . . 
+            . . f c c c c 7 7 6 f c c c . . 
+            . . c 6 2 7 7 7 f c c 7 7 7 c . 
+            . c 6 7 7 2 7 7 c f 6 7 7 7 7 c 
+            . c 1 1 1 1 7 6 6 c 6 6 6 c c c 
+            . c 1 1 1 1 1 6 6 6 6 6 6 c . . 
+            . c 6 1 1 1 1 1 6 6 6 6 6 c . . 
+            . . c 6 1 1 1 1 1 7 6 6 c c . . 
+            . . . c c c c c c c c c c . . . 
+            `, SpriteKind.Enemy)
+        tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
+        enemy1.follow(mySprite, 20)
+        numOfEnemy = 2
+    }
+    if (stageLevel >= 3) {
+        enemy1 = sprites.create(img`
+            . . f f f . . . . . . . . f f f 
+            . f f c c . . . . . . f c b b c 
+            f f c c . . . . . . f c b b c . 
+            f c f c . . . . . . f b c c c . 
+            f f f c c . c c . f c b b c c . 
+            f f c 3 c c 3 c c f b c b b c . 
+            f f b 3 b c 3 b c f b c c b c . 
+            . c b b b b b b c b b c c c . . 
+            . c 1 b b b 1 b b c c c c . . . 
+            c b b b b b b b b b c c . . . . 
+            c b c b b b c b b b b f . . . . 
+            f b 1 f f f 1 b b b b f c . . . 
+            f b b b b b b b b b b f c c . . 
+            . f b b b b b b b b c f . . . . 
+            . . f b b b b b b c f . . . . . 
+            . . . f f f f f f f . . . . . . 
+            `, SpriteKind.Enemy)
+        tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
+        enemy1.follow(mySprite, 80)
+        numOfEnemy = 3
+    }
+    if (stageLevel == 4) {
+        enemy1 = sprites.create(img`
+            ........................
+            ........................
+            ........................
+            ........................
+            ..........ffff..........
+            ........ff1111ff........
+            .......fb111111bf.......
+            .......f11111111f.......
+            ......fd11111111df......
+            ......fd11111111df......
+            ......fddd1111dddf......
+            ......fbdbfddfbdbf......
+            ......fcdcf11fcdcf......
+            .......fb111111bf.......
+            ......fffcdb1bdffff.....
+            ....fc111cbfbfc111cf....
+            ....f1b1b1ffff1b1b1f....
+            ....fbfbffffffbfbfbf....
+            .........ffffff.........
+            ...........fff..........
+            ........................
+            ........................
+            ........................
+            ........................
+            `, SpriteKind.Enemy2)
+        tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
+        enemy1.follow(mySprite, 20)
     }
     pause(100)
     game.splash("Stage " + convertToText(stageLevel))
@@ -269,6 +290,7 @@ sprites.onCreated(SpriteKind.fire, function (sprite) {
 sprites.onOverlap(SpriteKind.fire, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
     if (numOfEnemy <= 0) {
+        pause(500)
         music.baDing.play()
     }
 })
@@ -279,7 +301,7 @@ function setRenga () {
     for (let cY = 0; cY <= 13; cY++) {
         for (let cX = 0; cX <= 13; cX++) {
             if (tiles.tileAtLocationEquals(tiles.getTileLocation(cY, cX), assets.tile`transparency16`)) {
-                if (Math.percentChance(10 + stageLevel * 7)) {
+                if (Math.percentChance(10 + stageLevel * 5)) {
                     renga2 = sprites.create(img`
                         e e e e e e e e e e f e e e e e 
                         e e e e e e e e e e f e e e e e 
@@ -580,7 +602,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSpr
     if (goalVisible) {
         if (numOfEnemy <= 0) {
             if (stageLevel < 5) {
-                game.splash("Stage " + convertToText(stageLevel) + " crear")
+                game.splash("Stage " + convertToText(stageLevel) + " clear")
                 stageLevel += 1
                 clearStage()
                 setRenga()
@@ -787,10 +809,10 @@ let ItemDamage: Sprite = null
 let spriteGoal: Sprite = null
 let renga2: Sprite = null
 let goalVisible = false
+let numOfEnemy = 0
 let enemy1: Sprite = null
 let mySprite: Sprite = null
 let fireDamage = false
-let numOfEnemy = 0
 let onlyStart = false
 let numOfBomb = 0
 let maxbomb = 0
@@ -801,7 +823,6 @@ bombpower = 1
 maxbomb = 1
 numOfBomb = 0
 onlyStart = true
-numOfEnemy = 4
 fireDamage = true
 scene.setBackgroundColor(6)
 tiles.setTilemap(tilemap`レベル1`)
