@@ -626,9 +626,26 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSpr
     if (goalVisible) {
         if (numOfEnemy <= 0) {
             if (stageLevel < 5) {
-                mySprite.say("Stage " + convertToText(stageLevel) + " clear", 5000)
-                mySprite.setPosition(spriteGoal.x, spriteGoal.y)
-                controller.moveSprite(mySprite, 0, 0)
+                mySprite.destroy()
+                spriteGoal.setImage(img`
+                    f f f f f f f f f f f f f f f f 
+                    f e e e f f f f f f f f e e e f 
+                    f e 4 f f f f f f c f f f 4 4 f 
+                    f e f f f f f f c c f f f c 4 f 
+                    b e f f f c f f f f f f f c 4 f 
+                    b e c c c f f f e e f f c c 4 f 
+                    f e f f f f f e e f f c c f 4 f 
+                    f e f f f b f e e f b f f f 4 f 
+                    f e 4 f 4 1 f 4 4 f 1 4 f 4 4 f 
+                    f e 4 f e 4 4 4 4 4 4 e f 4 4 f 
+                    f e 4 f f f e e e e f f f 4 4 f 
+                    f e f e f b 7 7 7 7 b f e f 4 f 
+                    b e e 4 f 7 7 7 7 7 7 f 4 e 4 f 
+                    b e e e f 6 6 6 6 6 6 f e e 4 f 
+                    f e 4 4 4 f f f f f f 4 4 4 4 f 
+                    f e 4 4 4 f f 4 4 f f 4 4 4 4 f 
+                    `)
+                music.beamUp.play()
                 pause(5000)
                 stageLevel += 1
                 clearStage()
@@ -799,31 +816,33 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     onlyStart = false
-    if (numOfBomb < maxbomb) {
-        mySprite2 = sprites.create(img`
-            . . . . . . . . . . 2 2 2 2 . . 
-            . . . . . c c c c 1 1 2 2 . . . 
-            . . . c c c c c 1 1 1 f b b . . 
-            . . c c c c f f 1 1 b f f f b . 
-            . c c c c f f f 1 1 f f f f b . 
-            . c c c f f f f 1 1 f f f f f b 
-            c c c f f f f f f f f f f f f b 
-            c c c f f f f f f f f f f f f b 
-            c c c f f f f f f f f f f f f b 
-            c c c f f f f f f f f f f f f b 
-            c c c f f f f f f f f f f f f b 
-            . c c c f f f f f f f f f f b . 
-            . f c c f f f f f f f f f f b . 
-            . . f c c f f f f f f f f b . . 
-            . . . f f b f f f f f f b . . . 
-            . . . . . f f b b b b . . . . . 
-            `, SpriteKind.Projectile)
-        mySprite2.setPosition(Math.round((mySprite.x + 8) / 16) * 16 - 8, Math.round((mySprite.y + 8) / 16) * 16 - 8)
-        numOfBomb += 1
-        while (mySprite.overlapsWith(mySprite2)) {
-            pause(100)
+    if (true) {
+        if (numOfBomb < maxbomb) {
+            mySprite2 = sprites.create(img`
+                . . . . . . . . . . 2 2 2 2 . . 
+                . . . . . c c c c 1 1 2 2 . . . 
+                . . . c c c c c 1 1 1 f b b . . 
+                . . c c c c f f 1 1 b f f f b . 
+                . c c c c f f f 1 1 f f f f b . 
+                . c c c f f f f 1 1 f f f f f b 
+                c c c f f f f f f f f f f f f b 
+                c c c f f f f f f f f f f f f b 
+                c c c f f f f f f f f f f f f b 
+                c c c f f f f f f f f f f f f b 
+                c c c f f f f f f f f f f f f b 
+                . c c c f f f f f f f f f f b . 
+                . f c c f f f f f f f f f f b . 
+                . . f c c f f f f f f f f b . . 
+                . . . f f b f f f f f f b . . . 
+                . . . . . f f b b b b . . . . . 
+                `, SpriteKind.Projectile)
+            mySprite2.setPosition(Math.round((mySprite.x + 8) / 16) * 16 - 8, Math.round((mySprite.y + 8) / 16) * 16 - 8)
+            numOfBomb += 1
+            while (mySprite.overlapsWith(mySprite2)) {
+                pause(100)
+            }
+            tiles.setWallAt(tiles.getTileLocation(mySprite2.x / 16, mySprite2.y / 16), true)
         }
-        tiles.setWallAt(tiles.getTileLocation(mySprite2.x / 16, mySprite2.y / 16), true)
     }
 })
 let mySprite2: Sprite = null
