@@ -645,13 +645,15 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSpr
                     f e 4 4 4 f f f f f f 4 4 4 4 f 
                     f e 4 4 4 f f 4 4 f f 4 4 4 4 f 
                     `)
-                music.beamUp.play()
-                pause(5000)
+                music.playMelody("A F E F D G E F ", 120)
+                pause(2000)
                 stageLevel += 1
                 clearStage()
                 setRenga()
                 setSprite()
             } else {
+                clearStage()
+                tiles.setTilemap(tilemap`レベル11`)
                 scene.setBackgroundImage(img`
                     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
                     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
