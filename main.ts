@@ -206,7 +206,7 @@ function setSprite () {
         numOfEnemy = 4
     }
     if (stageLevel == 5) {
-        enemy1 = sprites.create(img`
+        enemy2 = sprites.create(img`
             ........................
             ........................
             ........................
@@ -232,8 +232,8 @@ function setSprite () {
             ........................
             ........................
             `, SpriteKind.Enemy2)
-        tiles.placeOnRandomTile(enemy1, assets.tile`transparency16`)
-        enemy1.follow(mySprite, 20)
+        tiles.placeOnRandomTile(enemy2, assets.tile`transparency16`)
+        enemy2.follow(mySprite, 20)
     }
     pause(100)
     game.splash("Stage " + convertToText(stageLevel))
@@ -645,13 +645,14 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSpr
                     f e 4 4 4 f f f f f f 4 4 4 4 f 
                     f e 4 4 4 f f 4 4 f f 4 4 4 4 f 
                     `)
-                music.playMelody("A F E F D G E F ", 120)
-                pause(2000)
+                music.playMelody("G B A G C5 B A B ", 120)
                 stageLevel += 1
                 clearStage()
                 setRenga()
                 setSprite()
             } else {
+                enemy2.destroy(effects.disintegrate, 500)
+                pause(1000)
                 clearStage()
                 tiles.setTilemap(tilemap`レベル11`)
                 scene.setBackgroundImage(img`
@@ -776,7 +777,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSpr
                     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
                     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
                     `)
-                game.showLongText("Evil has perished. Peace has come to the world.", DialogLayout.Center)
+                music.playMelody("C5 G B A F A C5 B ", 81)
+                game.showLongText("Evil has perished. Peace has come to the world.", DialogLayout.Bottom)
                 game.over(true, effects.dissolve)
             }
         }
@@ -997,6 +999,7 @@ let ItemDamage: Sprite = null
 let spriteGoal: Sprite = null
 let renga2: Sprite = null
 let goalVisible = false
+let enemy2: Sprite = null
 let numOfEnemy = 0
 let enemy1: Sprite = null
 let mySprite: Sprite = null
