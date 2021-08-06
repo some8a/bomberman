@@ -111,7 +111,7 @@ function setSprite () {
         . . . f f . . f f . . . . 
         `, SpriteKind.Player)
     mySprite.setPosition(24, 24)
-    controller.moveSprite(mySprite)
+    controller.moveSprite(mySprite, 60, 60)
     scene.cameraFollowSprite(mySprite)
     onlyStart = true
     enemy1 = sprites.create(img`
@@ -312,7 +312,7 @@ sprites.onCreated(SpriteKind.fire, function (sprite) {
     })
 })
 sprites.onOverlap(SpriteKind.fire, SpriteKind.Enemy, function (sprite, otherSprite) {
-    otherSprite.destroy()
+    otherSprite.destroy(effects.disintegrate, 500)
     if (numOfEnemy <= 0) {
         pause(500)
         music.baDing.play()
@@ -651,8 +651,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.goal, function (sprite, otherSpr
                 setRenga()
                 setSprite()
             } else {
-                enemy2.destroy(effects.disintegrate, 500)
-                pause(1000)
+                enemy2.destroy(effects.fire, 2000)
+                pause(3000)
                 clearStage()
                 tiles.setTilemap(tilemap`レベル11`)
                 scene.setBackgroundImage(img`
@@ -818,7 +818,7 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
         for (let bombcount = 0; bombcount <= bombpower; bombcount++) {
             if ((sprite.y + 8) % 32 != 16) {
                 fireR = sprites.create(img`
-                    . 3 . . . . . . . . . . . 4 . . 
+                    . . . . . . . . . . . . . . . . 
                     . 3 3 . . . . . . . . . 4 4 . . 
                     . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
                     . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
@@ -831,16 +831,16 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
                     . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
                     . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
                     . 4 4 d d 4 d d d 4 3 d d 4 . . 
-                    . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
-                    . 4 5 4 . . 4 4 4 . . . 4 4 . . 
-                    . 4 4 . . . . . . . . . . 4 4 . 
+                    . . 4 5 4 4 4 4 4 . 4 4 4 . . . 
+                    . 4 5 4 . . 4 4 4 . . . 4 4 4 . 
+                    . . . . . . . . . . . . . . . . 
                     `, SpriteKind.fire)
                 fireR.setPosition(sprite.x + 16 * bombcount, sprite.y)
                 if (fireR.x < 224) {
                     tiles.setWallAt(tiles.getTileLocation(fireR.x / 16, fireR.y / 16), false)
                 }
                 fireL = sprites.create(img`
-                    . 3 . . . . . . . . . . . 4 . . 
+                    . . . . . . . . . . . . . . . . 
                     . 3 3 . . . . . . . . . 4 4 . . 
                     . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
                     . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
@@ -853,9 +853,9 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
                     . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
                     . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
                     . 4 4 d d 4 d d d 4 3 d d 4 . . 
-                    . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
-                    . 4 5 4 . . 4 4 4 . . . 4 4 . . 
-                    . 4 4 . . . . . . . . . . 4 4 . 
+                    . . 4 5 4 4 4 4 4 . 4 4 4 . . . 
+                    . 4 5 4 . . 4 4 4 . . . 4 4 4 . 
+                    . . . . . . . . . . . . . . . . 
                     `, SpriteKind.fire)
                 fireL.setPosition(sprite.x - 16 * bombcount, sprite.y)
                 if (fireL.x > 16) {
@@ -864,7 +864,7 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
             }
             if ((sprite.x + 8) % 32 != 16) {
                 fireD = sprites.create(img`
-                    . 3 . . . . . . . . . . . 4 . . 
+                    . . . . . . . . . . . . . . . . 
                     . 3 3 . . . . . . . . . 4 4 . . 
                     . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
                     . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
@@ -877,16 +877,16 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
                     . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
                     . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
                     . 4 4 d d 4 d d d 4 3 d d 4 . . 
-                    . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
-                    . 4 5 4 . . 4 4 4 . . . 4 4 . . 
-                    . 4 4 . . . . . . . . . . 4 4 . 
+                    . . 4 5 4 4 4 4 4 . 4 4 4 . . . 
+                    . 4 5 4 . . 4 4 4 . . . 4 4 4 . 
+                    . . . . . . . . . . . . . . . . 
                     `, SpriteKind.fire)
                 fireD.setPosition(sprite.x, sprite.y + 16 * bombcount)
                 if (fireD.y < 224) {
                     tiles.setWallAt(tiles.getTileLocation(fireD.x / 16, fireD.y / 16), false)
                 }
                 fireU = sprites.create(img`
-                    . 3 . . . . . . . . . . . 4 . . 
+                    . . . . . . . . . . . . . . . . 
                     . 3 3 . . . . . . . . . 4 4 . . 
                     . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
                     . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
@@ -899,9 +899,9 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
                     . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
                     . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
                     . 4 4 d d 4 d d d 4 3 d d 4 . . 
-                    . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
-                    . 4 5 4 . . 4 4 4 . . . 4 4 . . 
-                    . 4 4 . . . . . . . . . . 4 4 . 
+                    . . 4 5 4 4 4 4 4 . 4 4 4 . . . 
+                    . 4 5 4 . . 4 4 4 . . . 4 4 4 . 
+                    . . . . . . . . . . . . . . . . 
                     `, SpriteKind.fire)
                 fireU.setPosition(sprite.x, sprite.y - 16 * bombcount)
                 if (fireU.y > 16) {
